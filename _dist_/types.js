@@ -10,6 +10,7 @@ export const defaultPodcast = {
     name: 'test',
     time: 123
   }],
+  audioComponent: document.createElement('audio'),
   originalAudioName: '',
   originalDuration: 0
 };

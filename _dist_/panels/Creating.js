@@ -39,6 +39,7 @@ export class Creating extends React.Component {
             const context = new window.AudioContext();
             const source = context.createMediaElementSource(audio);
             this.setPodcast({
+              audioComponent: audio,
               audioSource: source
             });
           }
@@ -59,7 +60,7 @@ export class Creating extends React.Component {
     const {
       podcast
     } = this.state;
-    return [podcast.image, podcast.name, podcast.description].every(e => e);
+    return [podcast.image, podcast.name, podcast.description, podcast.audioSource].every(e => e);
   }
 
   render() {
