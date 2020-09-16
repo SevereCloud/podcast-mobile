@@ -19,6 +19,7 @@ export interface Podcast {
 
   timeCodes: TimeCode[];
 
+  audioComponent: HTMLAudioElement;
   originalAudioName: string;
   originalDuration: number;
   audioSource?: MediaElementAudioSourceNode;
@@ -42,6 +43,7 @@ export const defaultPodcast: Podcast = {
     },
   ],
 
+  audioComponent: document.createElement('audio'),
   originalAudioName: '',
   originalDuration: 0,
 };

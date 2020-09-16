@@ -48,7 +48,7 @@ export class Creating extends React.Component<CreatingProps, CreatingState> {
 
   get isValid() {
     const { podcast } = this.state;
-    return [podcast.image, podcast.name, podcast.description].every((e) => e);
+    return [podcast.image, podcast.name, podcast.description, podcast.audioSource].every((e) => e);
   }
 
   setPodcast = (podcast: Partial<Podcast>): void => {
@@ -71,7 +71,7 @@ export class Creating extends React.Component<CreatingProps, CreatingState> {
           };
           const context = new window.AudioContext();
           const source = context.createMediaElementSource(audio);
-          this.setPodcast({ audioSource: source });
+          this.setPodcast({ audioComponent: audio, audioSource: source });
         }
       };
 
