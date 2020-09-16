@@ -1,0 +1,16 @@
+{
+    "name": "Подкасты",
+    "short_name": "Подкасты",
+    "lang": "ru-RU",
+    "start_url": "",
+    "display": "standalone",
+    "theme_color": "#ffffff",
+    "dir": "ltr",
+    "icons": [
+      {
+        "src": "icon.png",
+        "sizes": "512x512",
+        "type": "image/png"
+      }
+    ]
+  }
