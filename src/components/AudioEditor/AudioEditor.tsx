@@ -13,7 +13,17 @@ import {
 	Separator,
 	Text,
 } from '@vkontakte/vkui';
-import { Icon24Play, Icon24Pause } from '@vkontakte/icons';
+import {
+	Icon24Play,
+	Icon24Pause,
+	Icon24Music,
+	Icon24ArrowUturnLeftOutline,
+} from '@vkontakte/icons';
+import {
+	Icon24ChartDown,
+	Icon24ChartUp,
+	Icon24Cut,
+} from '../icons';
 
 import type { Podcast } from '../../types';
 import WaveSurfer from 'wavesurfer.js';
@@ -102,10 +112,12 @@ const AudioEditor: FunctionComponent<IAudioEditorProps> = ({ podcast }) => {
 			<CardGrid>
 				<Card size="l" mode="outline">
 					<div id="timeline" style={{ height: 26 }} />
+
 					<Separator wide />
+
 					<div id="waveform" style={{ height: 90, background: '#f2f3f5' }} />
 
-					<Div>
+					<div style={{ padding: 8 }}>
 						{isBlobLoading && (
 							<Text
 								weight="regular"
@@ -114,14 +126,50 @@ const AudioEditor: FunctionComponent<IAudioEditorProps> = ({ podcast }) => {
 							</Text>
 						)}
 						{!isBlobLoading && (
-							<Button
-								style={{ width: 44 }}
-								before={shouldMusicPlay ? (<Icon24Pause />) : (<Icon24Play />)}
-								onClick={() => setShouldMusicPlay(!shouldMusicPlay)}
-								size="l"
-							/>
+							<div style={{ display: 'flex', justifyContent: 'space-between' }}>
+								<Button
+									style={{ width: 44 }}
+									before={shouldMusicPlay ? (<Icon24Pause />) : (<Icon24Play />)}
+									onClick={() => setShouldMusicPlay(!shouldMusicPlay)}
+									size="l"
+								/>
+								<div>
+									<Button
+										style={{ width: 44, marginRight: 4 }}
+										before={<Icon24Cut />}
+										size="l"
+										mode="secondary"
+									/>
+									<Button
+										style={{ width: 44 }}
+										before={<Icon24ArrowUturnLeftOutline />}
+										size="l"
+										mode="secondary"
+									/>
+								</div>
+								<div>
+									<Button
+										style={{ width: 44, marginRight: 4 }}
+										before={<Icon24Music />}
+										size="l"
+										mode="secondary"
+									/>
+									<Button
+										style={{ width: 44, marginRight: 4 }}
+										before={<Icon24ChartUp />}
+										size="l"
+										mode="secondary"
+									/>
+									<Button
+										style={{ width: 44 }}
+										before={<Icon24ChartDown />}
+										size="l"
+										mode="secondary"
+									/>
+								</div>
+							</div>
 						)}
-					</Div>
+					</div>
 				</Card>
 			</CardGrid>
 		</Group>
