@@ -35,6 +35,18 @@ export class App extends React.Component {
         photo_100: 'https://sun9-8.us...M1CV8SrIA&ava=1',
         photo_200: 'https://sun9-8.us...eMXx9VGsc&ava=1'
       },
+      groupInfo: {
+        id: 76982440,
+        name: '«Медуза»',
+        screen_name: 'meduzaproject',
+        is_closed: 0,
+        type: 'page',
+        is_member: 1,
+        description: 'Все, что вам нужно от новостей.',
+        photo_50: 'https://sun9-10.u...grqzJFw18&ava=1',
+        photo_100: 'https://sun9-10.u...3y9Rgqq-o&ava=1',
+        photo_200: 'https://sun9-10.u...76tdsKND4&ava=1'
+      },
       podcast: defaultPodcast,
       podcastDone: false
     };
@@ -116,6 +128,7 @@ export class App extends React.Component {
     const {
       activeView,
       activePanel,
+      groupInfo,
       podcast,
       podcastDone
     } = this.state;
@@ -158,6 +171,7 @@ export class App extends React.Component {
     }, /*#__PURE__*/React.createElement(Preview, {
       setPanel: this.setPanel,
       goBack: this.goBack,
+      groupInfo: groupInfo,
       podcast: podcast,
       publishPodcast: () => {
         this.setPanel('main');
