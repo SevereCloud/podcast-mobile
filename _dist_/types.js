@@ -9,5 +9,7 @@ export const defaultPodcast = {
   timeCodes: [{
     name: 'test',
     time: 123
-  }]
+  }],
+  originalAudioName: '',
+  originalDuration: 0
 };

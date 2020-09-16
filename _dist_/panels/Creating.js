@@ -1,9 +1,10 @@
 function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
 
 import React from '../../web_modules/react.js';
-import { Button, Checkbox, Div, FixedLayout, FormLayout, Input, PanelHeader, PanelHeaderBack, Placeholder, Separator, Textarea, File } from '../../web_modules/@vkontakte/vkui.js';
-import { Icon56GalleryOutline } from '../../web_modules/@vkontakte/icons.js';
+import { Button, Checkbox, Div, FixedLayout, FormLayout, Input, PanelHeader, PanelHeaderBack, Placeholder, Separator, Textarea, File, SimpleCell } from '../../web_modules/@vkontakte/vkui.js';
+import { Icon28PodcastOutline, Icon56GalleryOutline } from '../../web_modules/@vkontakte/icons.js';
 import CoverLoader from '../components/CoverLoader/CoverLoader.js';
+import { timeFormat } from '../lib.js';
 export class Creating extends React.Component {
   constructor(props) {
     super(props);
@@ -13,6 +14,38 @@ export class Creating extends React.Component {
       this.setState({
         podcast: newPodcast
       });
+    });
+
+    _defineProperty(this, "change", input => {
+      if (input.target.files && input.target.files[0]) {
+        this.setPodcast({
+          originalAudioName: input.target.files[0].name
+        });
+        let reader = new FileReader();
+
+        reader.onload = e => {
+          const audio = document.createElement('audio');
+
+          if (e.target && typeof e.target.result === 'string') {
+            audio.src = e.target.result;
+
+            audio.onloadedmetadata = () => {
+              this.setPodcast({
+                originalDuration: audio.duration
+              });
+              console.log(audio.duration);
+            };
+
+            const context = new window.AudioContext();
+            const source = context.createMediaElementSource(audio);
+            this.setPodcast({
+              audioSource: source
+            });
+          }
+        };
+
+        reader.readAsDataURL(input.target.files[0]);
+      }
     });
 
     this.state = {
@@ -31,6 +64,7 @@ export class Creating extends React.Component {
 
   render() {
     const {
+      setPanel,
       goBack,
       updatePodcast
     } = this.props;
@@ -71,11 +105,35 @@ export class Creating extends React.Component {
       onChange: e => this.setPodcast({
         description: e.target.value
       })
-    })), /*#__PURE__*/React.createElement(Placeholder, {
+    })), podcast.audioSource ? /*#__PURE__*/React.createElement(React.Fragment, null, /*#__PURE__*/React.createElement(SimpleCell, {
+      disabled: true,
+      before: /*#__PURE__*/React.createElement("div", {
+        className: "PodcastIcon"
+      }, /*#__PURE__*/React.createElement(Icon28PodcastOutline, null)),
+      after: /*#__PURE__*/React.createElement("div", {
+        style: {
+          color: 'var(--text_secondary)'
+        }
+      }, timeFormat(podcast.originalDuration))
+    }, podcast.originalAudioName), /*#__PURE__*/React.createElement(Div, {
+      style: {
+        color: 'var(--text_secondary)'
+      }
+    }, "\u0412\u044B \u043C\u043E\u0436\u0435\u0442\u0435 \u0434\u043E\u0431\u0430\u0432\u0438\u0442\u044C \u0442\u0430\u0439\u043C\u043A\u043E\u0434\u044B \u0438 \u0441\u043A\u043E\u0440\u0440\u0435\u043A\u0442\u0438\u0440\u043E\u0432\u0430\u0442\u044C \u043F\u043E\u0434\u043A\u0430\u0441\u0442 \u0432 \u0440\u0435\u0436\u0438\u043C\u0435 \u0440\u0435\u0434\u0430\u043A\u0442\u0438\u0440\u043E\u0432\u0430\u043D\u0438\u044F"), /*#__PURE__*/React.createElement(Div, null, /*#__PURE__*/React.createElement(Button, {
+      stretched: true,
+      size: "m",
+      mode: "outline",
+      onClick: () => {
+        updatePodcast(podcast);
+        setPanel('edit');
+      }
+    }, "\u0420\u0435\u0434\u0430\u043A\u0442\u0438\u0440\u043E\u0432\u0430\u0442\u044C \u0430\u0443\u0434\u0438\u043E\u0437\u0430\u043F\u0438\u0441\u044C"))) : /*#__PURE__*/React.createElement(Placeholder, {
       header: "\u0417\u0430\u0433\u0440\u0443\u0437\u0438\u0442\u0435 \u0432\u0430\u0448 \u043F\u043E\u0434\u043A\u0430\u0441\u0442",
       action: /*#__PURE__*/React.createElement(File, {
         controlSize: "m",
-        mode: "outline"
+        mode: "outline",
+        accept: "audio/*",
+        onChange: this.change
       }, "\u0417\u0430\u0433\u0440\u0443\u0437\u0438\u0442\u044C \u0444\u0430\u0439\u043B")
     }, "\u0412\u044B\u0431\u0435\u0440\u0438\u0442\u0435 \u0433\u043E\u0442\u043E\u0432\u044B\u0439 \u0430\u0443\u0434\u0438\u043E\u0444\u0430\u0439\u043B \u0438\u0437", /*#__PURE__*/React.createElement("br", null), "\u0432\u0430\u0448\u0435\u0433\u043E \u0442\u0435\u043B\u0435\u0444\u043E\u043D\u0430 \u0438 \u0434\u043E\u0431\u0430\u0432\u044C\u0442\u0435 \u0435\u0433\u043E"), /*#__PURE__*/React.createElement(Separator, null), /*#__PURE__*/React.createElement(FormLayout, null, /*#__PURE__*/React.createElement(Checkbox, {
       style: {
@@ -123,6 +181,7 @@ export class Creating extends React.Component {
       disabled: !this.isValid,
       onClick: () => {
         updatePodcast(podcast);
+        setPanel('preview');
       },
       onBlur: () => this.setState({
         highlightErrors: false

@@ -4,6 +4,7 @@ import { Main } from './panels/Main.js';
 import { defaultPodcast } from './types.js';
 import { Creating } from './panels/Creating.js';
 import { Preview } from './panels/Preview.js';
+import { Edit } from './panels/Edit.js';
 export class App extends React.Component {
   constructor(props) {
     super(props);
@@ -138,11 +139,19 @@ export class App extends React.Component {
         this.setState({
           podcast: p
         });
-        this.setPanel('preview');
       }
     })), /*#__PURE__*/React.createElement(Panel, {
       id: "edit"
-    }), /*#__PURE__*/React.createElement(Panel, {
+    }, /*#__PURE__*/React.createElement(Edit, {
+      setPanel: this.setPanel,
+      goBack: this.goBack,
+      podcast: podcast,
+      updatePodcast: p => {
+        this.setState({
+          podcast: p
+        });
+      }
+    })), /*#__PURE__*/React.createElement(Panel, {
       id: "music-chose"
     }), /*#__PURE__*/React.createElement(Panel, {
       id: "preview"
