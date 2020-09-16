@@ -17,6 +17,7 @@ interface AppState {
   scheme: AppearanceSchemeType;
   activeView: string;
   activePanel: { [id: string]: string };
+  popout?: React.ReactNode;
   history: Array<{ view: string; panel: string }>;
 
   userInfo: UserInfo;
@@ -40,6 +41,7 @@ export class App extends React.Component<AppProps, AppState> {
       scheme: 'bright_light',
       activeView: 'main',
       activePanel: { main: 'main' },
+      popout: null,
       history: [{ view: 'main', panel: 'main' }],
 
       userInfo: {
@@ -78,6 +80,7 @@ export class App extends React.Component<AppProps, AppState> {
 
     this.setView = this.setView.bind(this);
     this.setPanel = this.setPanel.bind(this);
+    this.setPopout = this.setPopout.bind(this);
     this.goBack = this.goBack.bind(this);
   }
 
@@ -123,6 +126,10 @@ export class App extends React.Component<AppProps, AppState> {
     this.setState({ activePanel: panel, history: newHistory });
   }
 
+  setPopout(popout: React.ReactNode): void {
+    this.setState({ popout: popout });
+  }
+
   goBack(): void {
     const newHistory = [...this.state.history];
     newHistory.pop();
@@ -143,13 +150,14 @@ export class App extends React.Component<AppProps, AppState> {
     const {
       activeView,
       activePanel,
+      popout,
       groupInfo,
       podcast,
       podcastDone,
     } = this.state;
 
     return (
-      <Root activeView={activeView}>
+      <Root activeView={activeView} popout={popout}>
         <View id="main" activePanel={activePanel['main']}>
           <Panel id="main">
             <Main setPanel={this.setPanel} podcastDone={podcastDone} />
@@ -157,6 +165,7 @@ export class App extends React.Component<AppProps, AppState> {
           <Panel id="creating">
             <Creating
               setPanel={this.setPanel}
+              setPopout={this.setPopout}
               goBack={this.goBack}
               podcast={podcast}
               updatePodcast={(p) => {

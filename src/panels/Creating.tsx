@@ -14,9 +14,19 @@ import {
   File,
   SimpleCell,
   Caption,
+  ActionSheet,
+  ActionSheetItem,
+  IOS,
+  platform,
 } from '@vkontakte/vkui';
-import { Icon28PodcastOutline, Icon56GalleryOutline } from '@vkontakte/icons';
-import type { Podcast } from '../types';
+import {
+  Icon24Chevron,
+  Icon28CameraOutline,
+  Icon28PodcastOutline,
+  Icon28Profile,
+  Icon56GalleryOutline,
+} from '@vkontakte/icons';
+import { descriptionPodcastAccess, namePodcastAccess, Podcast } from '../types';
 import CoverLoader from '../components/CoverLoader/CoverLoader';
 import { timeFormat } from '../lib';
 
@@ -28,6 +38,7 @@ interface CreatingState {
 export interface CreatingProps {
   // setView: (view: string, name?: string) => void;
   setPanel: (name: string) => void;
+  setPopout: (popout?: React.ReactNode) => void;
   goBack: () => void;
 
   podcast: Podcast;
@@ -43,7 +54,7 @@ export class Creating extends React.Component<CreatingProps, CreatingState> {
       podcast: props.podcast,
     };
 
-    this.setPodcast = this.setPodcast.bind(this);
+    this.openAccess = this.openAccess.bind(this);
   }
 
   get isValid() {
@@ -83,6 +94,34 @@ export class Creating extends React.Component<CreatingProps, CreatingState> {
       reader.readAsDataURL(input.target.files[0]);
     }
   };
+
+  openAccess() {
+    this.props.setPopout(
+      <ActionSheet
+        onClose={() => this.props.setPopout(null)}
+        iosCloseItem={
+          <ActionSheetItem autoclose mode="cancel">
+            Отменить
+          </ActionSheetItem>
+        }
+        // @ts-ignore
+        toggleRef={React.createRef()}
+      >
+        <ActionSheetItem
+          autoclose
+          onClick={() => this.setPodcast({ access: 'all' })}
+        >
+          {namePodcastAccess['all']}
+        </ActionSheetItem>
+        <ActionSheetItem
+          autoclose
+          onClick={() => this.setPodcast({ access: 'admins-only' })}
+        >
+          {namePodcastAccess['admins-only']}
+        </ActionSheetItem>
+      </ActionSheet>,
+    );
+  }
 
   render(): JSX.Element {
     const { setPanel, goBack, updatePodcast } = this.props;
@@ -214,19 +253,23 @@ export class Creating extends React.Component<CreatingProps, CreatingState> {
             Трейлер подкаста
           </Checkbox>
         </FormLayout>
-        <Div>TODO: Кому доступен</Div>
+        <SimpleCell
+          style={{ marginTop: 14 }}
+          after={<Icon24Chevron />}
+          description={namePodcastAccess[podcast.access]}
+          onClick={this.openAccess}
+        >
+          Кому доступен данный подкаст
+        </SimpleCell>
         <Div
           style={{
             paddingTop: 4,
             paddingBottom: 24,
-            color: 'var(--text_secondary)',
+            color: 'var(--icon_tertiary)',
           }}
         >
           <Caption level="1" weight="regular">
-            {podcast.access === 'all' &&
-              'При публикации записи с эпизодом, он становится доступным для всех пользователей'}
-            {podcast.access === 'admins-only' &&
-              'При публикации записи с эпизодом, он становится доступен только руководителям сообщества'}
+            {descriptionPodcastAccess[podcast.access]}
           </Caption>
         </Div>
         <div style={{ height: 68 }} />
