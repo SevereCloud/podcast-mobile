@@ -127,9 +127,10 @@ export class Creating extends React.Component<CreatingProps, CreatingState> {
             <SimpleCell
               disabled
               before={
-              <div className="PodcastIcon">
-                <Icon28PodcastOutline />
-              </div>}
+                <div className="PodcastIcon">
+                  <Icon28PodcastOutline />
+                </div>
+              }
               after={
                 <div style={{ color: 'var(--text_secondary)' }}>
                   {timeFormat(podcast.originalDuration)}

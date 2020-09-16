@@ -61,7 +61,6 @@ export class Edit extends React.Component<EditProps, EditState> {
         <PanelHeader left={<PanelHeaderBack onClick={() => goBack()} />}>
           Редактирование
         </PanelHeader>
-        
       </>
     );
   }
