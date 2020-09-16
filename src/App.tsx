@@ -2,6 +2,7 @@ import React from 'react';
 import { Panel, Root, View } from '@vkontakte/vkui';
 import type {
   AppearanceSchemeType,
+  GroupInfo,
   UpdateConfigData,
   UserInfo,
 } from '@vkontakte/vk-bridge';
@@ -19,6 +20,7 @@ interface AppState {
   history: Array<{ view: string; panel: string }>;
 
   userInfo: UserInfo;
+  groupInfo: GroupInfo;
 
   podcast: Podcast;
   audio?: MediaElementAudioSourceNode;
@@ -56,6 +58,18 @@ export class App extends React.Component<AppProps, AppState> {
         timezone: 3,
         photo_100: 'https://sun9-8.us...M1CV8SrIA&ava=1',
         photo_200: 'https://sun9-8.us...eMXx9VGsc&ava=1',
+      },
+      groupInfo: {
+        id: 76982440,
+        name: '«Медуза»',
+        screen_name: 'meduzaproject',
+        is_closed: 0,
+        type: 'page',
+        is_member: 1,
+        description: 'Все, что вам нужно от новостей.',
+        photo_50: 'https://sun9-10.u...grqzJFw18&ava=1',
+        photo_100: 'https://sun9-10.u...3y9Rgqq-o&ava=1',
+        photo_200: 'https://sun9-10.u...76tdsKND4&ava=1',
       },
 
       podcast: defaultPodcast,
@@ -126,7 +140,13 @@ export class App extends React.Component<AppProps, AppState> {
 
   render(): JSX.Element {
     const { vkAPI } = this.props;
-    const { activeView, activePanel, podcast, podcastDone } = this.state;
+    const {
+      activeView,
+      activePanel,
+      groupInfo,
+      podcast,
+      podcastDone,
+    } = this.state;
 
     return (
       <Root activeView={activeView}>
@@ -159,6 +179,7 @@ export class App extends React.Component<AppProps, AppState> {
             <Preview
               setPanel={this.setPanel}
               goBack={this.goBack}
+              groupInfo={groupInfo}
               podcast={podcast}
               publishPodcast={() => {
                 this.setPanel('main');
