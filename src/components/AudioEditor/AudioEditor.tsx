@@ -10,20 +10,21 @@ import {
 	Header,
 	Card,
 	CardGrid,
-	Separator
+	Separator,
+	Text,
 } from '@vkontakte/vkui';
 import { Icon24Play, Icon24Pause } from '@vkontakte/icons';
 
 import type { Podcast } from '../../types';
 import WaveSurfer from 'wavesurfer.js';
-import Waveform from './WaveForm';
-
+// import TimelinePlugin from './timeline';
 interface IAudioEditorProps {
 	podcast: Podcast;
 }
 
 const AudioEditor: FunctionComponent<IAudioEditorProps> = ({ podcast }) => {
 	const { audioFile } = podcast;
+	const [isBlobLoading, setIsBlobLoading] = useState<boolean>(true);
 	const [shouldMusicPlay, setShouldMusicPlay] = useState<boolean>(false);
 	const [didMount, setDidMount] = useState<boolean>(false);
 	// eslint-disable-next-line
@@ -35,17 +36,47 @@ const AudioEditor: FunctionComponent<IAudioEditorProps> = ({ podcast }) => {
 				barRadius: 2,
 				barGap: 4,
 				barMinHeight: 2,
-				barHeight: 0.75,
+				barHeight: 0.6,
 				cursorWidth: 1,
+				cursorColor: '#FF3347',
 				container: '#waveform',
 				backend: 'WebAudio',
 				height: 96,
 				progressColor: '#3F8AE0',
+				waveColor: '#3F8AE0',
 				responsive: true,
-				waveColor: '#EFEFEF',
-				cursorColor: 'transparent',
+				// waveColor: '#EFEFEF',
+				//cursorColor: 'transparent',
+				plugins: [
+					/**
+					TimelinePlugin.create({
+						container: '#timeline',
+						labelPadding: 0,
+						timeInterval: (pxPerSec: number) => {
+							if (pxPerSec >= 25) {
+								return 1;
+							} else if (pxPerSec * 5 >= 25) {
+								return 5;
+							} else if (pxPerSec * 15 >= 25) {
+								return 10;
+							}
+							return Math.ceil(0.5 / pxPerSec) * 60;
+						},
+						unlabeledNotchColor: '#99a2ad',
+						primaryFontColor: '#99a2ad',
+						secondaryFontColor: '#99a2ad',
+						fontSize: 9,
+						height: 21,
+						notchPercentHeight: 33,
+					}),
+					 */
+				]
 			});
 			wavesurfer.loadBlob(audioFile!);
+			wavesurfer.on('ready', () => {
+				setIsBlobLoading(false);
+				wavesurfer.getCurrentTime
+			});
 
 			setDidMount(true);
 			setWavesurfer(wavesurfer);
@@ -70,15 +101,26 @@ const AudioEditor: FunctionComponent<IAudioEditorProps> = ({ podcast }) => {
 		<Group separator="hide">
 			<CardGrid>
 				<Card size="l" mode="outline">
-					<div style={{ height: 26 }} />
+					<div id="timeline" style={{ height: 26 }} />
+					<Separator wide />
 					<div id="waveform" style={{ height: 90, background: '#f2f3f5' }} />
+
 					<Div>
-						<Button
-							style={{ width: 44 }}
-							before={shouldMusicPlay ? (<Icon24Pause />) : (<Icon24Play />)}
-							onClick={() => setShouldMusicPlay(!shouldMusicPlay)}
-							size="l"
-						/>
+						{isBlobLoading && (
+							<Text
+								weight="regular"
+								style={{ textAlign: 'center' }}>
+								Подготовка редактора (пара секунд)...
+							</Text>
+						)}
+						{!isBlobLoading && (
+							<Button
+								style={{ width: 44 }}
+								before={shouldMusicPlay ? (<Icon24Pause />) : (<Icon24Play />)}
+								onClick={() => setShouldMusicPlay(!shouldMusicPlay)}
+								size="l"
+							/>
+						)}
 					</Div>
 				</Card>
 			</CardGrid>
