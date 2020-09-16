@@ -14,6 +14,7 @@ import {
 } from '@vkontakte/vkui';
 import { Icon16Play } from '@vkontakte/icons';
 import type { Podcast } from '../types';
+import AudioEditor from '../components/AudioEditor';
 import { timeFormat } from '../lib';
 
 interface EditState {
@@ -61,6 +62,7 @@ export class Edit extends React.Component<EditProps, EditState> {
         <PanelHeader left={<PanelHeaderBack onClick={() => goBack()} />}>
           Редактирование
         </PanelHeader>
+        <AudioEditor podcast={podcast} />
       </>
     );
   }
