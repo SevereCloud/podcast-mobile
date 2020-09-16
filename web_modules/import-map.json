@@ -5,7 +5,9 @@
     "@vkontakte/vk-mini-apps-api": "./@vkontakte/vk-mini-apps-api.js",
     "@vkontakte/vkui": "./@vkontakte/vkui.js",
     "@vkontakte/vkui/dist/vkui.css": "./@vkontakte/vkui/dist/vkui.css",
+    "imask": "./imask.js",
     "react": "./react.js",
-    "react-dom": "./react-dom.js"
+    "react-dom": "./react-dom.js",
+    "react-imask": "./react-imask.js"
   }
 }

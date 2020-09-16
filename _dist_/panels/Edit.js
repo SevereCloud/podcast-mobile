@@ -2,6 +2,7 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
 
 import React from '../../web_modules/react.js';
 import { PanelHeader, PanelHeaderBack } from '../../web_modules/@vkontakte/vkui.js';
+import TimeCodeEditor from '../components/TimeCodeEditor/TimeCodeEditor.js';
 export class Edit extends React.Component {
   constructor(props) {
     super(props);
@@ -38,7 +39,10 @@ export class Edit extends React.Component {
       left: /*#__PURE__*/React.createElement(PanelHeaderBack, {
         onClick: () => goBack()
       })
-    }, "\u0420\u0435\u0434\u0430\u043A\u0442\u0438\u0440\u043E\u0432\u0430\u043D\u0438\u0435"));
+    }, "\u0420\u0435\u0434\u0430\u043A\u0442\u0438\u0440\u043E\u0432\u0430\u043D\u0438\u0435"), /*#__PURE__*/React.createElement(TimeCodeEditor, {
+      podcast: podcast,
+      updatePodcast: updatePodcast
+    }));
   }
 
 }

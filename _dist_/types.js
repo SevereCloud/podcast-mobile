@@ -6,10 +6,7 @@ export const defaultPodcast = {
   trailer: false,
   explicitContent: false,
   access: 'all',
-  timeCodes: [{
-    name: 'test',
-    time: 123
-  }],
+  timeCodes: [],
   audioComponent: document.createElement('audio'),
   originalAudioName: '',
   originalDuration: 0

@@ -1,6 +1,7 @@
 import { c as createCommonjsModule, r as react, g as getDefaultExportFromCjs } from '../common/index-2cd4dd6b.js';
 import { b as browserSprite, a as browserSymbol, e as es6ObjectAssign } from '../common/browser-sprite-329c1bbb.js';
 import { b as bridge } from '../common/index.es-112d111e.js';
+import { p as propTypes } from '../common/index-06b61c98.js';
 
 var canUseDOM = !!(typeof window !== 'undefined' && window.document &&
 /* eslint-disable */
@@ -218,84 +219,6 @@ function _defineProperty(obj, key, value) {
 }
 
 var defineProperty = _defineProperty;
-
-/**
- * Copyright (c) 2013-present, Facebook, Inc.
- *
- * This source code is licensed under the MIT license found in the
- * LICENSE file in the root directory of this source tree.
- */
-
-var ReactPropTypesSecret = 'SECRET_DO_NOT_PASS_THIS_OR_YOU_WILL_BE_FIRED';
-
-var ReactPropTypesSecret_1 = ReactPropTypesSecret;
-
-function emptyFunction() {}
-function emptyFunctionWithReset() {}
-emptyFunctionWithReset.resetWarningCache = emptyFunction;
-
-var factoryWithThrowingShims = function() {
-  function shim(props, propName, componentName, location, propFullName, secret) {
-    if (secret === ReactPropTypesSecret_1) {
-      // It is still safe when called from React.
-      return;
-    }
-    var err = new Error(
-      'Calling PropTypes validators directly is not supported by the `prop-types` package. ' +
-      'Use PropTypes.checkPropTypes() to call them. ' +
-      'Read more at http://fb.me/use-check-prop-types'
-    );
-    err.name = 'Invariant Violation';
-    throw err;
-  }  shim.isRequired = shim;
-  function getShim() {
-    return shim;
-  }  // Important!
-  // Keep this list in sync with production version in `./factoryWithTypeCheckers.js`.
-  var ReactPropTypes = {
-    array: shim,
-    bool: shim,
-    func: shim,
-    number: shim,
-    object: shim,
-    string: shim,
-    symbol: shim,
-
-    any: shim,
-    arrayOf: getShim,
-    element: shim,
-    elementType: shim,
-    instanceOf: getShim,
-    node: shim,
-    objectOf: getShim,
-    oneOf: getShim,
-    oneOfType: getShim,
-    shape: getShim,
-    exact: getShim,
-
-    checkPropTypes: emptyFunctionWithReset,
-    resetWarningCache: emptyFunction
-  };
-
-  ReactPropTypes.PropTypes = ReactPropTypes;
-
-  return ReactPropTypes;
-};
-
-var propTypes = createCommonjsModule(function (module) {
-/**
- * Copyright (c) 2013-present, Facebook, Inc.
- *
- * This source code is licensed under the MIT license found in the
- * LICENSE file in the root directory of this source tree.
- */
-
-{
-  // By explicitly using `prop-types` you are opting into new production behavior.
-  // http://fb.me/prop-types-in-prod
-  module.exports = factoryWithThrowingShims();
-}
-});
 
 function classNames() {
   var result = [];
@@ -2732,6 +2655,63 @@ var Title = function Title(_ref) {
   }), children);
 };
 
+var done = createCommonjsModule(function (module, exports) {
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+exports.default = void 0;
+
+var _react = _interopRequireDefault(react);
+
+var _browserSymbol = _interopRequireDefault(browserSymbol);
+
+
+
+
+
+
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+// @ts-ignore
+// @ts-ignore
+var viewBox = '0 0 16 16';
+var id = 'done_16';
+var content = '<symbol xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16" id="done_16"><g fill="none" fill-rule="evenodd"><path d="M0 0h16v16H0z" /><path d="M6 10.2L3.5 7.7a.99.99 0 10-1.4 1.4l3.193 3.193a1 1 0 001.414 0L14.3 4.7a.99.99 0 00-1.4-1.4L6 10.2z" fill="currentColor" /></g></symbol>';
+var isMounted = false;
+
+function mountIcon() {
+  if (!isMounted) {
+    (0, sprite.addSpriteSymbol)(new _browserSymbol.default({
+      id: id,
+      viewBox: viewBox,
+      content: content
+    }));
+    isMounted = true;
+  }
+}
+
+var Icon16Done = function Icon16Done(props) {
+  (0, sprite.useIsomorphicLayoutEffect)(function () {
+    mountIcon();
+  }, []);
+  return _react.default.createElement(SvgIcon_1.SvgIcon, (0, es6ObjectAssign.assign)({}, props, {
+    viewBox: viewBox,
+    id: id,
+    width: !isNaN(props.width) ? +props.width : 16,
+    height: !isNaN(props.height) ? +props.height : 16
+  }));
+};
+
+Icon16Done.mountIcon = mountIcon;
+var _default = Icon16Done;
+exports.default = _default;
+
+});
+
+var SelectedIcon = /*@__PURE__*/getDefaultExportFromCjs(done);
+
 var Text = function Text(_ref) {
   var children = _ref.children,
       className = _ref.className,
@@ -2841,6 +2821,20 @@ var Button$1 = withAdaptivity(Button, {
   sizeY: true
 });
 
+var IconButton = function IconButton(_ref) {
+  var className = _ref.className,
+      icon = _ref.icon,
+      restProps = objectWithoutProperties(_ref, ["className", "icon"]);
+
+  var Component = restProps.href ? 'a' : 'button';
+  var platform = usePlatform();
+  return /*#__PURE__*/react.createElement(Tappable$1, _extends_1({}, restProps, {
+    Component: Component,
+    activeEffectDelay: 200,
+    className: classNames(getClassname('IconButton', platform), className)
+  }), icon);
+};
+
 var Card = function Card(_ref) {
   var size = _ref.size,
       mode = _ref.mode,
@@ -2862,6 +2856,40 @@ Card.defaultProps = {
   size: 'm',
   mode: 'tint'
 };
+
+var CellButton = function CellButton(_ref) {
+  var className = _ref.className,
+      align = _ref.align,
+      mode = _ref.mode,
+      before = _ref.before,
+      children = _ref.children,
+      stopPropagation = _ref.stopPropagation,
+      Component = _ref.Component,
+      sizeX = _ref.sizeX,
+      restProps = objectWithoutProperties(_ref, ["className", "align", "mode", "before", "children", "stopPropagation", "Component", "sizeX"]);
+
+  var platform = usePlatform();
+  return /*#__PURE__*/react.createElement(Tappable$1, _extends_1({}, restProps, {
+    className: classNames(getClassname('CellButton', platform), className, "CellButton--sizeX-".concat(sizeX), "CellButton--lvl-".concat(mode), "CellButton--aln-".concat(align)),
+    Component: restProps.href ? 'a' : Component
+  }), /*#__PURE__*/react.createElement("div", {
+    className: "CellButton__in"
+  }, before && /*#__PURE__*/react.createElement("div", {
+    className: "CellButton__before"
+  }, before), children && /*#__PURE__*/react.createElement("div", {
+    className: "CellButton__content"
+  }, children)));
+};
+
+CellButton.defaultProps = {
+  mode: 'primary',
+  Component: 'button',
+  align: 'left',
+  stopPropagation: true
+};
+var CellButton$1 = withAdaptivity(CellButton, {
+  sizeX: true
+});
 
 var Header = function Header(_ref) {
   var className = _ref.className,
@@ -2931,6 +2959,189 @@ Group = withAdaptivity(Group, {
   sizeX: true
 });
 var Group$1 = Group;
+
+var List = function List(_ref) {
+  var className = _ref.className,
+      children = _ref.children,
+      restProps = objectWithoutProperties(_ref, ["className", "children"]);
+
+  var platform = usePlatform();
+  var baseClassName = getClassname('List', platform);
+  return /*#__PURE__*/react.createElement("div", _extends_1({}, restProps, {
+    className: classNames(baseClassName, className)
+  }), children);
+};
+
+var cancel = createCommonjsModule(function (module, exports) {
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+exports.default = void 0;
+
+var _react = _interopRequireDefault(react);
+
+var _browserSymbol = _interopRequireDefault(browserSymbol);
+
+
+
+
+
+
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+// @ts-ignore
+// @ts-ignore
+var viewBox = '0 0 24 24';
+var id = 'cancel_24';
+var content = '<symbol xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" id="cancel_24"><g fill="none" fill-rule="evenodd"><path d="M0 0h24v24H0z" /><path d="M18.3 5.7a.99.99 0 00-1.4 0L12 10.6 7.1 5.7a.99.99 0 00-1.4 1.4l4.9 4.9-4.9 4.9a.99.99 0 001.4 1.4l4.9-4.9 4.9 4.9a.99.99 0 001.4-1.4L13.4 12l4.9-4.9a.99.99 0 000-1.4z" fill="currentColor" /></g></symbol>';
+var isMounted = false;
+
+function mountIcon() {
+  if (!isMounted) {
+    (0, sprite.addSpriteSymbol)(new _browserSymbol.default({
+      id: id,
+      viewBox: viewBox,
+      content: content
+    }));
+    isMounted = true;
+  }
+}
+
+var Icon24Cancel = function Icon24Cancel(props) {
+  (0, sprite.useIsomorphicLayoutEffect)(function () {
+    mountIcon();
+  }, []);
+  return _react.default.createElement(SvgIcon_1.SvgIcon, (0, es6ObjectAssign.assign)({}, props, {
+    viewBox: viewBox,
+    id: id,
+    width: !isNaN(props.width) ? +props.width : 24,
+    height: !isNaN(props.height) ? +props.height : 24
+  }));
+};
+
+Icon24Cancel.mountIcon = mountIcon;
+var _default = Icon24Cancel;
+exports.default = _default;
+
+});
+
+var Icon24Cancel = /*@__PURE__*/getDefaultExportFromCjs(cancel);
+
+var reorder = createCommonjsModule(function (module, exports) {
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+exports.default = void 0;
+
+var _react = _interopRequireDefault(react);
+
+var _browserSymbol = _interopRequireDefault(browserSymbol);
+
+
+
+
+
+
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+// @ts-ignore
+// @ts-ignore
+var viewBox = '0 0 24 24';
+var id = 'reorder_24';
+var content = '<symbol xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" id="reorder_24"><g fill="none" fill-rule="evenodd"><path d="M0 0h24v24H0z" /><path d="M21 18a1 1 0 01-1 1H4a1 1 0 010-2h16a1 1 0 011 1zm0-4a1 1 0 01-1 1H4a1 1 0 010-2h16a1 1 0 011 1zm0-4a1 1 0 01-1 1H4a1 1 0 010-2h16a1 1 0 011 1zM3 6a1 1 0 011-1h16a1 1 0 010 2H4a1 1 0 01-1-1z" fill="currentColor" fill-rule="nonzero" /></g></symbol>';
+var isMounted = false;
+
+function mountIcon() {
+  if (!isMounted) {
+    (0, sprite.addSpriteSymbol)(new _browserSymbol.default({
+      id: id,
+      viewBox: viewBox,
+      content: content
+    }));
+    isMounted = true;
+  }
+}
+
+var Icon24Reorder = function Icon24Reorder(props) {
+  (0, sprite.useIsomorphicLayoutEffect)(function () {
+    mountIcon();
+  }, []);
+  return _react.default.createElement(SvgIcon_1.SvgIcon, (0, es6ObjectAssign.assign)({}, props, {
+    viewBox: viewBox,
+    id: id,
+    width: !isNaN(props.width) ? +props.width : 24,
+    height: !isNaN(props.height) ? +props.height : 24
+  }));
+};
+
+Icon24Reorder.mountIcon = mountIcon;
+var _default = Icon24Reorder;
+exports.default = _default;
+
+});
+
+var Icon24Reorder = /*@__PURE__*/getDefaultExportFromCjs(reorder);
+
+var reorder_ios = createCommonjsModule(function (module, exports) {
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+exports.default = void 0;
+
+var _react = _interopRequireDefault(react);
+
+var _browserSymbol = _interopRequireDefault(browserSymbol);
+
+
+
+
+
+
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+// @ts-ignore
+// @ts-ignore
+var viewBox = '0 0 24 24';
+var id = 'reorder_ios_24';
+var content = '<symbol xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" id="reorder_ios_24"><g fill="none" fill-rule="evenodd"><path opacity=".1" d="M0 0h24v24H0z" /><path d="M2.75 7h18.5a.75.75 0 110 1.5H2.75a.75.75 0 010-1.5zm0 4h18.5a.75.75 0 110 1.5H2.75a.75.75 0 110-1.5zm0 4h18.5a.75.75 0 110 1.5H2.75a.75.75 0 110-1.5z" fill="currentColor" fill-rule="nonzero" /></g></symbol>';
+var isMounted = false;
+
+function mountIcon() {
+  if (!isMounted) {
+    (0, sprite.addSpriteSymbol)(new _browserSymbol.default({
+      id: id,
+      viewBox: viewBox,
+      content: content
+    }));
+    isMounted = true;
+  }
+}
+
+var Icon24ReorderIos = function Icon24ReorderIos(props) {
+  (0, sprite.useIsomorphicLayoutEffect)(function () {
+    mountIcon();
+  }, []);
+  return _react.default.createElement(SvgIcon_1.SvgIcon, (0, es6ObjectAssign.assign)({}, props, {
+    viewBox: viewBox,
+    id: id,
+    width: !isNaN(props.width) ? +props.width : 24,
+    height: !isNaN(props.height) ? +props.height : 24
+  }));
+};
+
+Icon24ReorderIos.mountIcon = mountIcon;
+var _default = Icon24ReorderIos;
+exports.default = _default;
+
+});
+
+var Icon24ReorderIos = /*@__PURE__*/getDefaultExportFromCjs(reorder_ios);
 
 var chevron = createCommonjsModule(function (module, exports) {
 
@@ -3031,6 +3242,283 @@ SimpleCell.defaultProps = {
 var SimpleCell$1 = withAdaptivity(SimpleCell, {
   sizeX: true
 });
+
+function _createSuper$7(Derived) { var hasNativeReflectConstruct = _isNativeReflectConstruct$7(); return function _createSuperInternal() { var Super = getPrototypeOf(Derived), result; if (hasNativeReflectConstruct) { var NewTarget = getPrototypeOf(this).constructor; result = Reflect.construct(Super, arguments, NewTarget); } else { result = Super.apply(this, arguments); } return possibleConstructorReturn(this, result); }; }
+
+function _isNativeReflectConstruct$7() { if (typeof Reflect === "undefined" || !Reflect.construct) return false; if (Reflect.construct.sham) return false; if (typeof Proxy === "function") return true; try { Date.prototype.toString.call(Reflect.construct(Date, [], function () {})); return true; } catch (e) { return false; } }
+
+var Cell = /*#__PURE__*/function (_Component) {
+  inherits(Cell, _Component);
+
+  var _super = _createSuper$7(Cell);
+
+  function Cell(props) {
+    var _this;
+
+    classCallCheck(this, Cell);
+
+    _this = _super.call(this, props);
+
+    defineProperty(assertThisInitialized(_this), "rootEl", void 0);
+
+    defineProperty(assertThisInitialized(_this), "removeButton", void 0);
+
+    defineProperty(assertThisInitialized(_this), "onRemoveActivateClick", function (e) {
+      e.nativeEvent.stopPropagation();
+      e.preventDefault();
+
+      _this.setState({
+        isRemoveActivated: true
+      });
+
+      _this.document.addEventListener('click', _this.deactivateRemove);
+    });
+
+    defineProperty(assertThisInitialized(_this), "deactivateRemove", function () {
+      _this.setState({
+        isRemoveActivated: false,
+        removeOffset: 0
+      });
+
+      _this.document.removeEventListener('click', _this.deactivateRemove);
+    });
+
+    defineProperty(assertThisInitialized(_this), "onRemoveClick", function (e) {
+      e.nativeEvent.stopImmediatePropagation();
+      e.preventDefault();
+      _this.props.onRemove && _this.props.onRemove(e, _this.rootEl);
+    });
+
+    defineProperty(assertThisInitialized(_this), "getRemoveRef", function (el) {
+      return _this.removeButton = el;
+    });
+
+    defineProperty(assertThisInitialized(_this), "getRootRef", function (element) {
+      _this.rootEl = element;
+      setRef(element, _this.props.getRootRef);
+    });
+
+    defineProperty(assertThisInitialized(_this), "dragShift", void 0);
+
+    defineProperty(assertThisInitialized(_this), "listEl", void 0);
+
+    defineProperty(assertThisInitialized(_this), "siblings", void 0);
+
+    defineProperty(assertThisInitialized(_this), "dragStartIndex", void 0);
+
+    defineProperty(assertThisInitialized(_this), "dragEndIndex", void 0);
+
+    defineProperty(assertThisInitialized(_this), "dragDirection", void 0);
+
+    defineProperty(assertThisInitialized(_this), "onDragStart", function () {
+      _this.setState({
+        dragging: true
+      });
+
+      _this.dragShift = 0;
+      _this.listEl = _this.rootEl.closest('.List');
+      _this.listEl && _this.listEl.classList.add('List--dragging');
+      _this.siblings = Array.prototype.slice.call(_this.rootEl.parentElement.childNodes);
+      _this.dragStartIndex = _this.siblings.indexOf(_this.rootEl);
+    });
+
+    defineProperty(assertThisInitialized(_this), "onDragMove", function (e) {
+      e.originalEvent.preventDefault();
+
+      if (_this.state.removeOffset) {
+        return;
+      }
+
+      _this.rootEl.style.transform = "translateY(".concat(e.shiftY, "px)");
+
+      var rootGesture = _this.rootEl.getBoundingClientRect();
+
+      _this.dragDirection = _this.dragShift - e.shiftY < 0 ? 'down' : 'up';
+      _this.dragShift = e.shiftY;
+      _this.dragEndIndex = _this.dragStartIndex;
+
+      _this.siblings.forEach(function (sibling, siblingIndex) {
+        var siblingGesture = sibling.getBoundingClientRect();
+
+        if (_this.dragStartIndex < siblingIndex) {
+          if (rootGesture.bottom > siblingGesture.top + siblingGesture.height / 2) {
+            if (_this.dragDirection === 'down') {
+              sibling.style.transform = 'translateY(-100%)';
+            }
+
+            _this.dragEndIndex++;
+          }
+
+          if (rootGesture.top < siblingGesture.bottom - siblingGesture.height / 2 && _this.dragDirection === 'up') {
+            sibling.style.transform = 'translateY(0)';
+          }
+        } else if (_this.dragStartIndex > siblingIndex) {
+          if (rootGesture.top < siblingGesture.bottom - siblingGesture.height / 2) {
+            if (_this.dragDirection === 'up') {
+              sibling.style.transform = 'translateY(100%)';
+            }
+
+            _this.dragEndIndex--;
+          }
+
+          if (rootGesture.bottom > siblingGesture.top + siblingGesture.height / 2 && _this.dragDirection === 'down') {
+            sibling.style.transform = 'translateY(0)';
+          }
+        }
+      });
+    });
+
+    defineProperty(assertThisInitialized(_this), "onDragEnd", function () {
+      _this.setState({
+        dragging: false
+      });
+
+      _this.listEl && _this.listEl.classList.remove('List--dragging');
+      _this.props.onDragFinish && _this.props.onDragFinish({
+        from: _this.dragStartIndex,
+        to: _this.dragEndIndex
+      });
+
+      _this.siblings.forEach(function (sibling) {
+        return sibling.style.transform = null;
+      });
+
+      delete _this.dragShift;
+      delete _this.listEl;
+      delete _this.siblings;
+      delete _this.dragStartIndex;
+      delete _this.dragEndIndex;
+      delete _this.dragDirection;
+    });
+
+    defineProperty(assertThisInitialized(_this), "onDragClick", function (e) {
+      e.nativeEvent.stopPropagation();
+      e.preventDefault();
+    });
+
+    _this.state = {
+      isRemoveActivated: false,
+      removeOffset: 0,
+      dragging: false
+    };
+    return _this;
+  }
+
+  createClass(Cell, [{
+    key: "componentWillUnmount",
+    value: function componentWillUnmount() {
+      this.document.removeEventListener('click', this.deactivateRemove);
+    }
+  }, {
+    key: "componentDidUpdate",
+    value: function componentDidUpdate(_prevProps, prevState) {
+      if (prevState.isRemoveActivated !== this.state.isRemoveActivated && this.state.isRemoveActivated) {
+        this.setState({
+          removeOffset: this.removeButton.offsetWidth
+        });
+      }
+    }
+  }, {
+    key: "render",
+    value: function render() {
+      var _this$props = this.props,
+          onRemove = _this$props.onRemove,
+          removePlaceholder = _this$props.removePlaceholder,
+          onDragFinish = _this$props.onDragFinish,
+          className = _this$props.className,
+          style = _this$props.style,
+          getRootRef = _this$props.getRootRef,
+          platform = _this$props.platform,
+          before = _this$props.before,
+          after = _this$props.after,
+          disabled = _this$props.disabled,
+          removable = _this$props.removable,
+          draggable = _this$props.draggable,
+          selectable = _this$props.selectable,
+          Component = _this$props.Component,
+          onChange = _this$props.onChange,
+          onClick = _this$props.onClick,
+          name = _this$props.name,
+          checked = _this$props.checked,
+          defaultChecked = _this$props.defaultChecked,
+          restProps = objectWithoutProperties(_this$props, ["onRemove", "removePlaceholder", "onDragFinish", "className", "style", "getRootRef", "platform", "before", "after", "disabled", "removable", "draggable", "selectable", "Component", "onChange", "onClick", "name", "checked", "defaultChecked"]);
+
+      return /*#__PURE__*/react.createElement("div", {
+        className: classNames(getClassname('Cell', platform), {
+          'Cell--dragging': this.state.dragging
+        }, className),
+        style: style,
+        ref: this.getRootRef
+      }, /*#__PURE__*/react.createElement("div", {
+        className: "Cell__in",
+        style: platform === IOS && removable ? {
+          transform: "translateX(-".concat(this.state.removeOffset, "px)")
+        } : null
+      }, /*#__PURE__*/react.createElement(SimpleCell$1, _extends_1({}, restProps, {
+        onClick: draggable || removable ? undefined : onClick,
+        disabled: draggable || removable || disabled,
+        Component: selectable ? 'label' : Component,
+        before: /*#__PURE__*/react.createElement(react.Fragment, null, platform === IOS && removable && /*#__PURE__*/react.createElement("div", {
+          className: "Cell__remove-marker",
+          onClick: this.onRemoveActivateClick
+        }), selectable && /*#__PURE__*/react.createElement(react.Fragment, null, /*#__PURE__*/react.createElement("input", {
+          type: "checkbox",
+          className: "Cell__checkbox",
+          name: name,
+          onChange: onChange,
+          defaultChecked: defaultChecked,
+          checked: checked
+        }), /*#__PURE__*/react.createElement("div", {
+          className: "Cell__marker"
+        }, /*#__PURE__*/react.createElement(SelectedIcon, null))), platform === ANDROID && draggable && /*#__PURE__*/react.createElement(Touch, {
+          onStart: this.onDragStart,
+          onMoveY: this.onDragMove,
+          onEnd: this.onDragEnd,
+          onClick: this.onDragClick,
+          className: "Cell__dragger"
+        }, /*#__PURE__*/react.createElement(Icon24Reorder, null)), before),
+        after: /*#__PURE__*/react.createElement(react.Fragment, null, platform === ANDROID && removable && /*#__PURE__*/react.createElement("div", {
+          className: "Cell__remove-marker"
+        }, /*#__PURE__*/react.createElement(IconButton, {
+          icon: /*#__PURE__*/react.createElement(Icon24Cancel, null),
+          onClick: this.onRemoveClick
+        })), platform === IOS && draggable && /*#__PURE__*/react.createElement(Touch, {
+          className: "Cell__dragger",
+          onStart: this.onDragStart,
+          onMoveY: this.onDragMove,
+          onEnd: this.onDragEnd,
+          onClick: this.onDragClick
+        }, /*#__PURE__*/react.createElement(Icon24ReorderIos, null)), after)
+      }))), platform === IOS && removable && /*#__PURE__*/react.createElement("div", {
+        ref: this.getRemoveRef,
+        className: "Cell__remove",
+        onClick: this.onRemoveClick,
+        style: {
+          transform: "translateX(-".concat(this.state.removeOffset, "px)")
+        }
+      }, /*#__PURE__*/react.createElement("span", {
+        className: "Cell__remove-in"
+      }, removePlaceholder)));
+    }
+  }, {
+    key: "document",
+    get: function get() {
+      return this.context.document || document;
+    }
+  }]);
+
+  return Cell;
+}(react.Component);
+
+defineProperty(Cell, "defaultProps", {
+  removePlaceholder: 'Удалить'
+});
+
+defineProperty(Cell, "contextTypes", {
+  document: propTypes.any
+});
+
+var Cell$1 = withPlatform(Cell);
 
 var Div = function Div(_ref) {
   var className = _ref.className,
@@ -3282,14 +3770,14 @@ var Input$1 = withAdaptivity(Input, {
   sizeY: true
 });
 
-function _createSuper$7(Derived) { var hasNativeReflectConstruct = _isNativeReflectConstruct$7(); return function _createSuperInternal() { var Super = getPrototypeOf(Derived), result; if (hasNativeReflectConstruct) { var NewTarget = getPrototypeOf(this).constructor; result = Reflect.construct(Super, arguments, NewTarget); } else { result = Super.apply(this, arguments); } return possibleConstructorReturn(this, result); }; }
+function _createSuper$8(Derived) { var hasNativeReflectConstruct = _isNativeReflectConstruct$8(); return function _createSuperInternal() { var Super = getPrototypeOf(Derived), result; if (hasNativeReflectConstruct) { var NewTarget = getPrototypeOf(this).constructor; result = Reflect.construct(Super, arguments, NewTarget); } else { result = Super.apply(this, arguments); } return possibleConstructorReturn(this, result); }; }
 
-function _isNativeReflectConstruct$7() { if (typeof Reflect === "undefined" || !Reflect.construct) return false; if (Reflect.construct.sham) return false; if (typeof Proxy === "function") return true; try { Date.prototype.toString.call(Reflect.construct(Date, [], function () {})); return true; } catch (e) { return false; } }
+function _isNativeReflectConstruct$8() { if (typeof Reflect === "undefined" || !Reflect.construct) return false; if (Reflect.construct.sham) return false; if (typeof Proxy === "function") return true; try { Date.prototype.toString.call(Reflect.construct(Date, [], function () {})); return true; } catch (e) { return false; } }
 
 var Textarea = /*#__PURE__*/function (_PureComponent) {
   inherits(Textarea, _PureComponent);
 
-  var _super = _createSuper$7(Textarea);
+  var _super = _createSuper$8(Textarea);
 
   function Textarea(props) {
     var _this;
@@ -3833,4 +4321,4 @@ var PanelHeaderBack = function PanelHeaderBack(props) {
 
 var PanelHeaderBack$1 = /*#__PURE__*/react.memo(PanelHeaderBack);
 
-export { Button$1 as Button, Caption, Card, Checkbox$1 as Checkbox, Div, File, FixedLayout$1 as FixedLayout, FormLayout, Group$1 as Group, Header, Input$1 as Input, Link, Panel$1 as Panel, PanelHeader$1 as PanelHeader, PanelHeaderBack$1 as PanelHeaderBack, Placeholder, Progress, Root$1 as Root, Separator$1 as Separator, SimpleCell$1 as SimpleCell, Tappable$1 as Tappable, Text, Textarea$1 as Textarea, View$1 as View, classNames, getClassname as getClassName, usePlatform, withPlatform };
+export { Button$1 as Button, Caption, Card, Cell$1 as Cell, CellButton$1 as CellButton, Checkbox$1 as Checkbox, Div, File, FixedLayout$1 as FixedLayout, FormLayout, Group$1 as Group, Header, Input$1 as Input, Link, List, Panel$1 as Panel, PanelHeader$1 as PanelHeader, PanelHeaderBack$1 as PanelHeaderBack, Placeholder, Progress, Root$1 as Root, Separator$1 as Separator, SimpleCell$1 as SimpleCell, Tappable$1 as Tappable, Text, Textarea$1 as Textarea, View$1 as View, classNames, getClassname as getClassName, usePlatform, withPlatform };
