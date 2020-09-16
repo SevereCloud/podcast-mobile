@@ -14,6 +14,7 @@ export class App extends React.Component {
       activePanel: {
         main: 'main'
       },
+      popout: null,
       history: [{
         view: 'main',
         panel: 'main'
@@ -52,6 +53,7 @@ export class App extends React.Component {
     };
     this.setView = this.setView.bind(this);
     this.setPanel = this.setPanel.bind(this);
+    this.setPopout = this.setPopout.bind(this);
     this.goBack = this.goBack.bind(this);
   }
 
@@ -104,6 +106,12 @@ export class App extends React.Component {
     });
   }
 
+  setPopout(popout) {
+    this.setState({
+      popout: popout
+    });
+  }
+
   goBack() {
     const newHistory = [...this.state.history];
     newHistory.pop();
@@ -128,12 +136,14 @@ export class App extends React.Component {
     const {
       activeView,
       activePanel,
+      popout,
       groupInfo,
       podcast,
       podcastDone
     } = this.state;
     return /*#__PURE__*/React.createElement(Root, {
-      activeView: activeView
+      activeView: activeView,
+      popout: popout
     }, /*#__PURE__*/React.createElement(View, {
       id: "main",
       activePanel: activePanel['main']
@@ -146,6 +156,7 @@ export class App extends React.Component {
       id: "creating"
     }, /*#__PURE__*/React.createElement(Creating, {
       setPanel: this.setPanel,
+      setPopout: this.setPopout,
       goBack: this.goBack,
       podcast: podcast,
       updatePodcast: p => {

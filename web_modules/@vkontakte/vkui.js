@@ -2536,6 +2536,290 @@ SvgIcon.defaultProps = {
 
 });
 
+function _createSuper$7(Derived) { var hasNativeReflectConstruct = _isNativeReflectConstruct$7(); return function _createSuperInternal() { var Super = getPrototypeOf(Derived), result; if (hasNativeReflectConstruct) { var NewTarget = getPrototypeOf(this).constructor; result = Reflect.construct(Super, arguments, NewTarget); } else { result = Super.apply(this, arguments); } return possibleConstructorReturn(this, result); }; }
+
+function _isNativeReflectConstruct$7() { if (typeof Reflect === "undefined" || !Reflect.construct) return false; if (Reflect.construct.sham) return false; if (typeof Proxy === "function") return true; try { Date.prototype.toString.call(Reflect.construct(Date, [], function () {})); return true; } catch (e) { return false; } }
+
+var PopoutWrapper = /*#__PURE__*/function (_Component) {
+  inherits(PopoutWrapper, _Component);
+
+  var _super = _createSuper$7(PopoutWrapper);
+
+  function PopoutWrapper(props) {
+    var _this;
+
+    classCallCheck(this, PopoutWrapper);
+
+    _this = _super.call(this, props);
+
+    defineProperty(assertThisInitialized(_this), "elRef", void 0);
+
+    defineProperty(assertThisInitialized(_this), "animationFinishTimeout", void 0);
+
+    defineProperty(assertThisInitialized(_this), "onFadeInEnd", function (e) {
+      if (!e || e.animationName === 'animation-full-fade-in') {
+        _this.setState({
+          opened: true
+        });
+      }
+    });
+
+    defineProperty(assertThisInitialized(_this), "preventTouch", function (e) {
+      return e.preventDefault();
+    });
+
+    _this.state = {
+      opened: !props.hasMask
+    };
+    _this.elRef = /*#__PURE__*/react.createRef();
+    return _this;
+  }
+
+  createClass(PopoutWrapper, [{
+    key: "componentDidMount",
+    value: function componentDidMount() {
+      if (canUseDOM) {
+        window.addEventListener('touchmove', this.preventTouch, {
+          passive: false
+        });
+        this.waitAnimationFinish(this.elRef.current, this.onFadeInEnd);
+      }
+    }
+  }, {
+    key: "componentWillUnmount",
+    value: function componentWillUnmount() {
+      // Здесь нужен последний аргумент с такими же параметрами, потому что
+      // некоторые браузеры на странных вендорах типа Meizu не удаляют обработчик.
+      // https://github.com/VKCOM/VKUI/issues/444
+      if (canUseDOM) {
+        // @ts-ignore (В интерфейсе EventListenerOptions нет поля passive)
+        window.removeEventListener('touchmove', this.preventTouch, {
+          passive: false
+        });
+        clearTimeout(this.animationFinishTimeout);
+      }
+    }
+  }, {
+    key: "waitAnimationFinish",
+    value: function waitAnimationFinish(elem, eventHandler) {
+      {
+        clearTimeout(this.animationFinishTimeout);
+        this.animationFinishTimeout = setTimeout(eventHandler, this.props.platform === ANDROID ? 200 : 300);
+      }
+    }
+  }, {
+    key: "render",
+    value: function render() {
+      var _this$props = this.props,
+          alignY = _this$props.alignY,
+          alignX = _this$props.alignX,
+          closing = _this$props.closing,
+          children = _this$props.children,
+          hasMask = _this$props.hasMask,
+          className = _this$props.className,
+          platform = _this$props.platform,
+          restProps = objectWithoutProperties(_this$props, ["alignY", "alignX", "closing", "children", "hasMask", "className", "platform"]);
+
+      var baseClassNames = getClassname('PopoutWrapper', platform);
+      return /*#__PURE__*/react.createElement("div", _extends_1({}, restProps, {
+        className: classNames(baseClassNames, "PopoutWrapper--v-".concat(alignY), "PopoutWrapper--h-".concat(alignX), {
+          'PopoutWrapper--closing': closing,
+          'PopoutWrapper--opened': this.state.opened,
+          'PopoutWrapper--fixed': hasMask
+        }, className),
+        ref: this.elRef
+      }), hasMask && /*#__PURE__*/react.createElement("div", {
+        className: "PopoutWrapper__mask"
+      }), /*#__PURE__*/react.createElement("div", {
+        className: "PopoutWrapper__container"
+      }, children));
+    }
+  }]);
+
+  return PopoutWrapper;
+}(react.Component);
+
+defineProperty(PopoutWrapper, "defaultProps", {
+  hasMask: true,
+  alignY: 'center',
+  alignX: 'center',
+  closing: false
+});
+
+var PopoutWrapper$1 = withPlatform(PopoutWrapper);
+
+function _createSuper$8(Derived) { var hasNativeReflectConstruct = _isNativeReflectConstruct$8(); return function _createSuperInternal() { var Super = getPrototypeOf(Derived), result; if (hasNativeReflectConstruct) { var NewTarget = getPrototypeOf(this).constructor; result = Reflect.construct(Super, arguments, NewTarget); } else { result = Super.apply(this, arguments); } return possibleConstructorReturn(this, result); }; }
+
+function _isNativeReflectConstruct$8() { if (typeof Reflect === "undefined" || !Reflect.construct) return false; if (Reflect.construct.sham) return false; if (typeof Proxy === "function") return true; try { Date.prototype.toString.call(Reflect.construct(Date, [], function () {})); return true; } catch (e) { return false; } }
+
+var ActionSheetDropdownDesktop = /*#__PURE__*/function (_Component) {
+  inherits(ActionSheetDropdownDesktop, _Component);
+
+  var _super = _createSuper$8(ActionSheetDropdownDesktop);
+
+  function ActionSheetDropdownDesktop() {
+    var _this;
+
+    classCallCheck(this, ActionSheetDropdownDesktop);
+
+    for (var _len = arguments.length, args = new Array(_len), _key = 0; _key < _len; _key++) {
+      args[_key] = arguments[_key];
+    }
+
+    _this = _super.call.apply(_super, [this].concat(args));
+
+    defineProperty(assertThisInitialized(_this), "state", {
+      dropdownStyles: {
+        left: '0',
+        top: '0',
+        opacity: '0',
+        pointerEvents: 'none'
+      }
+    });
+
+    defineProperty(assertThisInitialized(_this), "componentDidMount", function () {
+      var _this$props = _this.props,
+          toggleRef = _this$props.toggleRef,
+          elementRef = _this$props.elementRef;
+      var toggleRect = toggleRef.getBoundingClientRect();
+      var elementRect = elementRef.current.getBoundingClientRect();
+      var left = toggleRect.left + toggleRect.width - elementRect.width + _this.window.pageXOffset;
+      var top = toggleRect.top + toggleRect.height + _this.window.pageYOffset;
+
+      _this.setState({
+        dropdownStyles: {
+          left: "".concat(left, "px"),
+          top: "".concat(top, "px"),
+          opacity: '1',
+          pointerEvents: 'auto'
+        }
+      });
+
+      setTimeout(function () {
+        _this.window.addEventListener('click', _this.handleClickOutside);
+      });
+    });
+
+    defineProperty(assertThisInitialized(_this), "componentWillUnmount", function () {
+      _this.window.removeEventListener('click', _this.handleClickOutside);
+    });
+
+    defineProperty(assertThisInitialized(_this), "handleClickOutside", function (e) {
+      var dropdownElement = _this.props.elementRef.current;
+
+      if (dropdownElement !== e.target && dropdownElement && !dropdownElement.contains(e.target)) {
+        _this.onClose();
+      }
+    });
+
+    defineProperty(assertThisInitialized(_this), "onClose", function () {
+      _this.props.onClose();
+    });
+
+    defineProperty(assertThisInitialized(_this), "stopPropagation", function (e) {
+      return e.stopPropagation();
+    });
+
+    return _this;
+  }
+
+  createClass(ActionSheetDropdownDesktop, [{
+    key: "render",
+    value: function render() {
+      var _this$props2 = this.props,
+          children = _this$props2.children,
+          platform = _this$props2.platform,
+          elementRef = _this$props2.elementRef,
+          toggleRef = _this$props2.toggleRef,
+          closing = _this$props2.closing,
+          restProps = objectWithoutProperties(_this$props2, ["children", "platform", "elementRef", "toggleRef", "closing"]);
+
+      var baseClaseName = getClassname('ActionSheet', platform);
+      return /*#__PURE__*/react.createElement("div", _extends_1({}, restProps, {
+        ref: elementRef,
+        onClick: this.stopPropagation,
+        style: this.state.dropdownStyles,
+        className: classNames(baseClaseName, 'ActionSheet--desktop', {
+          'ActionSheet--closing': this.props.closing
+        })
+      }), children);
+    }
+  }, {
+    key: "window",
+    get: function get() {
+      return this.context.window || window;
+    }
+  }]);
+
+  return ActionSheetDropdownDesktop;
+}(react.Component);
+
+defineProperty(ActionSheetDropdownDesktop, "contextTypes", {
+  window: propTypes.any
+});
+
+var ActionSheetDropdownDesktop$1 = withPlatform(ActionSheetDropdownDesktop);
+
+function _createSuper$9(Derived) { var hasNativeReflectConstruct = _isNativeReflectConstruct$9(); return function _createSuperInternal() { var Super = getPrototypeOf(Derived), result; if (hasNativeReflectConstruct) { var NewTarget = getPrototypeOf(this).constructor; result = Reflect.construct(Super, arguments, NewTarget); } else { result = Super.apply(this, arguments); } return possibleConstructorReturn(this, result); }; }
+
+function _isNativeReflectConstruct$9() { if (typeof Reflect === "undefined" || !Reflect.construct) return false; if (Reflect.construct.sham) return false; if (typeof Proxy === "function") return true; try { Date.prototype.toString.call(Reflect.construct(Date, [], function () {})); return true; } catch (e) { return false; } }
+
+var ActionSheetDropdown = /*#__PURE__*/function (_Component) {
+  inherits(ActionSheetDropdown, _Component);
+
+  var _super = _createSuper$9(ActionSheetDropdown);
+
+  function ActionSheetDropdown() {
+    var _this;
+
+    classCallCheck(this, ActionSheetDropdown);
+
+    for (var _len = arguments.length, args = new Array(_len), _key = 0; _key < _len; _key++) {
+      args[_key] = arguments[_key];
+    }
+
+    _this = _super.call.apply(_super, [this].concat(args));
+
+    defineProperty(assertThisInitialized(_this), "onClose", function () {
+      _this.props.onClose();
+    });
+
+    defineProperty(assertThisInitialized(_this), "stopPropagation", function (e) {
+      return e.stopPropagation();
+    });
+
+    return _this;
+  }
+
+  createClass(ActionSheetDropdown, [{
+    key: "render",
+    value: function render() {
+      var _this$props = this.props,
+          children = _this$props.children,
+          platform = _this$props.platform,
+          elementRef = _this$props.elementRef,
+          toggleRef = _this$props.toggleRef,
+          closing = _this$props.closing,
+          restProps = objectWithoutProperties(_this$props, ["children", "platform", "elementRef", "toggleRef", "closing"]);
+
+      var baseClaseName = getClassname('ActionSheet', platform);
+      return /*#__PURE__*/react.createElement("div", _extends_1({}, restProps, {
+        ref: elementRef,
+        onClick: this.stopPropagation,
+        className: classNames(baseClaseName, {
+          'ActionSheet--closing': this.props.closing
+        })
+      }), children);
+    }
+  }]);
+
+  return ActionSheetDropdown;
+}(react.Component);
+
+var ActionSheetDropdown$1 = withPlatform(ActionSheetDropdown);
+
+var ActionSheetContext = /*#__PURE__*/react.createContext({});
+
 var Caption = function Caption(_ref) {
   var children = _ref.children,
       className = _ref.className,
@@ -2559,6 +2843,127 @@ var Caption = function Caption(_ref) {
     }, className)
   }), children);
 };
+
+function _createSuper$a(Derived) { var hasNativeReflectConstruct = _isNativeReflectConstruct$a(); return function _createSuperInternal() { var Super = getPrototypeOf(Derived), result; if (hasNativeReflectConstruct) { var NewTarget = getPrototypeOf(this).constructor; result = Reflect.construct(Super, arguments, NewTarget); } else { result = Super.apply(this, arguments); } return possibleConstructorReturn(this, result); }; }
+
+function _isNativeReflectConstruct$a() { if (typeof Reflect === "undefined" || !Reflect.construct) return false; if (Reflect.construct.sham) return false; if (typeof Proxy === "function") return true; try { Date.prototype.toString.call(Reflect.construct(Date, [], function () {})); return true; } catch (e) { return false; } }
+
+var ActionSheet = /*#__PURE__*/function (_Component) {
+  inherits(ActionSheet, _Component);
+
+  var _super = _createSuper$a(ActionSheet);
+
+  function ActionSheet(props) {
+    var _this;
+
+    classCallCheck(this, ActionSheet);
+
+    _this = _super.call(this, props);
+
+    defineProperty(assertThisInitialized(_this), "state", {
+      closing: false
+    });
+
+    defineProperty(assertThisInitialized(_this), "elRef", void 0);
+
+    defineProperty(assertThisInitialized(_this), "transitionFinishTimeout", void 0);
+
+    defineProperty(assertThisInitialized(_this), "onClose", function () {
+      _this.setState({
+        closing: true
+      });
+
+      _this.waitTransitionFinish(_this.props.onClose);
+    });
+
+    defineProperty(assertThisInitialized(_this), "onItemClick", function (action, autoclose) {
+      return function (event) {
+        event.persist();
+
+        if (autoclose) {
+          _this.setState({
+            closing: true
+          });
+
+          _this.waitTransitionFinish(function () {
+            _this.props.onClose();
+
+            action && action(event);
+          });
+        } else {
+          action && action(event);
+        }
+      };
+    });
+
+    _this.elRef = /*#__PURE__*/react.createRef();
+    return _this;
+  }
+
+  createClass(ActionSheet, [{
+    key: "waitTransitionFinish",
+    value: function waitTransitionFinish(eventHandler) {
+      if (this.props.viewWidth >= ViewWidth.TABLET) {
+        eventHandler();
+      }
+
+      {
+        clearTimeout(this.transitionFinishTimeout);
+        this.transitionFinishTimeout = setTimeout(eventHandler, this.props.platform === ANDROID ? 200 : 300);
+      }
+    }
+  }, {
+    key: "render",
+    value: function render() {
+      var _this$props = this.props,
+          children = _this$props.children,
+          className = _this$props.className,
+          header = _this$props.header,
+          text = _this$props.text,
+          style = _this$props.style,
+          platform = _this$props.platform,
+          viewWidth = _this$props.viewWidth,
+          iosCloseItem = _this$props.iosCloseItem,
+          restProps = objectWithoutProperties(_this$props, ["children", "className", "header", "text", "style", "platform", "viewWidth", "iosCloseItem"]);
+
+      var isDesktop = viewWidth >= ViewWidth.TABLET;
+      var DropdownComponent = isDesktop ? ActionSheetDropdownDesktop$1 : ActionSheetDropdown$1;
+      return /*#__PURE__*/react.createElement(PopoutWrapper$1, {
+        closing: this.state.closing,
+        alignY: "bottom",
+        className: className,
+        style: style,
+        onClick: this.onClose,
+        hasMask: !isDesktop
+      }, /*#__PURE__*/react.createElement(ActionSheetContext.Provider, {
+        value: {
+          onItemClick: this.onItemClick,
+          isDesktop: isDesktop
+        }
+      }, /*#__PURE__*/react.createElement(DropdownComponent, _extends_1({
+        closing: this.state.closing,
+        onClose: this.onClose,
+        elementRef: this.elRef
+      }, restProps), (hasReactNode(header) || hasReactNode(text)) && /*#__PURE__*/react.createElement("header", {
+        className: "ActionSheet__header"
+      }, hasReactNode(header) && /*#__PURE__*/react.createElement(Caption, {
+        level: "1",
+        weight: platform === IOS ? 'semibold' : 'medium',
+        className: "ActionSheet__title"
+      }, header), hasReactNode(text) && /*#__PURE__*/react.createElement(Caption, {
+        level: "1",
+        weight: "regular",
+        className: "ActionSheet__text"
+      }, text)), children, platform === IOS && !isDesktop && iosCloseItem)));
+    }
+  }]);
+
+  return ActionSheet;
+}(react.Component);
+
+var ActionSheet$1 = withAdaptivity(withPlatform(ActionSheet), {
+  viewWidth: true
+});
 
 var Subhead = function Subhead(_ref) {
   var children = _ref.children,
@@ -2711,6 +3116,83 @@ exports.default = _default;
 });
 
 var SelectedIcon = /*@__PURE__*/getDefaultExportFromCjs(done);
+
+var ActionSheetItem = function ActionSheetItem(_ref) {
+  var className = _ref.className,
+      children = _ref.children,
+      autoclose = _ref.autoclose,
+      mode = _ref.mode,
+      meta = _ref.meta,
+      subtitle = _ref.subtitle,
+      before = _ref.before,
+      isLast = _ref.isLast,
+      selectable = _ref.selectable,
+      value = _ref.value,
+      name = _ref.name,
+      checked = _ref.checked,
+      defaultChecked = _ref.defaultChecked,
+      onChange = _ref.onChange,
+      onClick = _ref.onClick,
+      restProps = objectWithoutProperties(_ref, ["className", "children", "autoclose", "mode", "meta", "subtitle", "before", "isLast", "selectable", "value", "name", "checked", "defaultChecked", "onChange", "onClick"]);
+
+  var platform = usePlatform();
+
+  var _useContext = react.useContext(ActionSheetContext),
+      onItemClick = _useContext.onItemClick,
+      isDesktop = _useContext.isDesktop;
+
+  var Component = 'div';
+
+  if (restProps.href) {
+    Component = 'a';
+  } else if (selectable) {
+    Component = 'label';
+  }
+
+  var isCompact = hasReactNode(subtitle) || hasReactNode(meta) || selectable;
+  return /*#__PURE__*/react.createElement(Tappable$1, _extends_1({}, restProps, {
+    onClick: onItemClick(onClick, autoclose),
+    className: classNames(getClassname('ActionSheetItem', platform), "ActionSheetItem--".concat(mode), {
+      'ActionSheetItem--compact': isCompact,
+      'ActionSheetItem--desktop': isDesktop
+    }, className),
+    Component: Component
+  }), hasReactNode(before) && /*#__PURE__*/react.createElement("div", {
+    className: "ActionSheetItem__before"
+  }, before), /*#__PURE__*/react.createElement("div", {
+    className: "ActionSheetItem__container"
+  }, /*#__PURE__*/react.createElement("div", {
+    className: "ActionSheetItem__content"
+  }, /*#__PURE__*/react.createElement(Title, {
+    weight: mode === 'cancel' ? 'medium' : 'regular',
+    level: isCompact || hasReactNode(before) || platform === ANDROID ? '3' : '2',
+    className: "ActionSheetItem__children"
+  }, children), hasReactNode(meta) && /*#__PURE__*/react.createElement(Title, {
+    weight: "regular",
+    level: isCompact || hasReactNode(before) || platform === ANDROID ? '3' : '2',
+    className: "ActionSheetItem__meta"
+  }, meta)), hasReactNode(subtitle) && /*#__PURE__*/react.createElement(Subhead, {
+    weight: "regular",
+    className: "ActionSheetItem__subtitle"
+  }, subtitle)), selectable && /*#__PURE__*/react.createElement("div", {
+    className: "ActionSheetItem__after"
+  }, /*#__PURE__*/react.createElement("input", {
+    type: "radio",
+    className: "ActionSheetItem__radio",
+    name: name,
+    value: value,
+    onChange: onChange,
+    defaultChecked: defaultChecked,
+    checked: checked,
+    disabled: restProps.disabled
+  }), /*#__PURE__*/react.createElement("div", {
+    className: "ActionSheetItem__marker"
+  }, /*#__PURE__*/react.createElement(SelectedIcon, null))));
+};
+
+ActionSheetItem.defaultProps = {
+  mode: 'default'
+};
 
 var Text = function Text(_ref) {
   var children = _ref.children,
@@ -3243,14 +3725,14 @@ var SimpleCell$1 = withAdaptivity(SimpleCell, {
   sizeX: true
 });
 
-function _createSuper$7(Derived) { var hasNativeReflectConstruct = _isNativeReflectConstruct$7(); return function _createSuperInternal() { var Super = getPrototypeOf(Derived), result; if (hasNativeReflectConstruct) { var NewTarget = getPrototypeOf(this).constructor; result = Reflect.construct(Super, arguments, NewTarget); } else { result = Super.apply(this, arguments); } return possibleConstructorReturn(this, result); }; }
+function _createSuper$b(Derived) { var hasNativeReflectConstruct = _isNativeReflectConstruct$b(); return function _createSuperInternal() { var Super = getPrototypeOf(Derived), result; if (hasNativeReflectConstruct) { var NewTarget = getPrototypeOf(this).constructor; result = Reflect.construct(Super, arguments, NewTarget); } else { result = Super.apply(this, arguments); } return possibleConstructorReturn(this, result); }; }
 
-function _isNativeReflectConstruct$7() { if (typeof Reflect === "undefined" || !Reflect.construct) return false; if (Reflect.construct.sham) return false; if (typeof Proxy === "function") return true; try { Date.prototype.toString.call(Reflect.construct(Date, [], function () {})); return true; } catch (e) { return false; } }
+function _isNativeReflectConstruct$b() { if (typeof Reflect === "undefined" || !Reflect.construct) return false; if (Reflect.construct.sham) return false; if (typeof Proxy === "function") return true; try { Date.prototype.toString.call(Reflect.construct(Date, [], function () {})); return true; } catch (e) { return false; } }
 
 var Cell = /*#__PURE__*/function (_Component) {
   inherits(Cell, _Component);
 
-  var _super = _createSuper$7(Cell);
+  var _super = _createSuper$b(Cell);
 
   function Cell(props) {
     var _this;
@@ -3770,14 +4252,14 @@ var Input$1 = withAdaptivity(Input, {
   sizeY: true
 });
 
-function _createSuper$8(Derived) { var hasNativeReflectConstruct = _isNativeReflectConstruct$8(); return function _createSuperInternal() { var Super = getPrototypeOf(Derived), result; if (hasNativeReflectConstruct) { var NewTarget = getPrototypeOf(this).constructor; result = Reflect.construct(Super, arguments, NewTarget); } else { result = Super.apply(this, arguments); } return possibleConstructorReturn(this, result); }; }
+function _createSuper$c(Derived) { var hasNativeReflectConstruct = _isNativeReflectConstruct$c(); return function _createSuperInternal() { var Super = getPrototypeOf(Derived), result; if (hasNativeReflectConstruct) { var NewTarget = getPrototypeOf(this).constructor; result = Reflect.construct(Super, arguments, NewTarget); } else { result = Super.apply(this, arguments); } return possibleConstructorReturn(this, result); }; }
 
-function _isNativeReflectConstruct$8() { if (typeof Reflect === "undefined" || !Reflect.construct) return false; if (Reflect.construct.sham) return false; if (typeof Proxy === "function") return true; try { Date.prototype.toString.call(Reflect.construct(Date, [], function () {})); return true; } catch (e) { return false; } }
+function _isNativeReflectConstruct$c() { if (typeof Reflect === "undefined" || !Reflect.construct) return false; if (Reflect.construct.sham) return false; if (typeof Proxy === "function") return true; try { Date.prototype.toString.call(Reflect.construct(Date, [], function () {})); return true; } catch (e) { return false; } }
 
 var Textarea = /*#__PURE__*/function (_PureComponent) {
   inherits(Textarea, _PureComponent);
 
-  var _super = _createSuper$8(Textarea);
+  var _super = _createSuper$c(Textarea);
 
   function Textarea(props) {
     var _this;
@@ -4321,4 +4803,4 @@ var PanelHeaderBack = function PanelHeaderBack(props) {
 
 var PanelHeaderBack$1 = /*#__PURE__*/react.memo(PanelHeaderBack);
 
-export { Button$1 as Button, Caption, Card, Cell$1 as Cell, CellButton$1 as CellButton, Checkbox$1 as Checkbox, Div, File, FixedLayout$1 as FixedLayout, FormLayout, Group$1 as Group, Header, Headline, Input$1 as Input, Link, List, Panel$1 as Panel, PanelHeader$1 as PanelHeader, PanelHeaderBack$1 as PanelHeaderBack, Placeholder, Progress, Root$1 as Root, Separator$1 as Separator, SimpleCell$1 as SimpleCell, Tappable$1 as Tappable, Text, Textarea$1 as Textarea, View$1 as View, classNames, getClassname as getClassName, usePlatform, withPlatform };
+export { ActionSheet$1 as ActionSheet, ActionSheetItem, Button$1 as Button, Caption, Card, Cell$1 as Cell, CellButton$1 as CellButton, Checkbox$1 as Checkbox, Div, File, FixedLayout$1 as FixedLayout, FormLayout, Group$1 as Group, Header, Headline, Input$1 as Input, Link, List, Panel$1 as Panel, PanelHeader$1 as PanelHeader, PanelHeaderBack$1 as PanelHeaderBack, Placeholder, Progress, Root$1 as Root, Separator$1 as Separator, SimpleCell$1 as SimpleCell, Tappable$1 as Tappable, Text, Textarea$1 as Textarea, View$1 as View, classNames, getClassname as getClassName, usePlatform, withPlatform };

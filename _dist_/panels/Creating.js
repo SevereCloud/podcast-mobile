@@ -1,8 +1,9 @@
 function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
 
 import React from '../../web_modules/react.js';
-import { Button, Checkbox, Div, FixedLayout, FormLayout, Input, PanelHeader, PanelHeaderBack, Placeholder, Separator, Textarea, File, SimpleCell, Caption } from '../../web_modules/@vkontakte/vkui.js';
-import { Icon28PodcastOutline, Icon56GalleryOutline } from '../../web_modules/@vkontakte/icons.js';
+import { Button, Checkbox, Div, FixedLayout, FormLayout, Input, PanelHeader, PanelHeaderBack, Placeholder, Separator, Textarea, File, SimpleCell, Caption, ActionSheet, ActionSheetItem } from '../../web_modules/@vkontakte/vkui.js';
+import { Icon24Chevron, Icon28PodcastOutline, Icon56GalleryOutline } from '../../web_modules/@vkontakte/icons.js';
+import { descriptionPodcastAccess, namePodcastAccess } from '../types.js';
 import CoverLoader from '../components/CoverLoader/CoverLoader.js';
 import { timeFormat } from '../lib.js';
 export class Creating extends React.Component {
@@ -53,7 +54,7 @@ export class Creating extends React.Component {
       highlightErrors: false,
       podcast: props.podcast
     };
-    this.setPodcast = this.setPodcast.bind(this);
+    this.openAccess = this.openAccess.bind(this);
   }
 
   get isValid() {
@@ -61,6 +62,28 @@ export class Creating extends React.Component {
       podcast
     } = this.state;
     return [podcast.image, podcast.name, podcast.description, podcast.audioSource].every(e => e);
+  }
+
+  openAccess() {
+    this.props.setPopout( /*#__PURE__*/React.createElement(ActionSheet, {
+      onClose: () => this.props.setPopout(null),
+      iosCloseItem: /*#__PURE__*/React.createElement(ActionSheetItem, {
+        autoclose: true,
+        mode: "cancel"
+      }, "\u041E\u0442\u043C\u0435\u043D\u0438\u0442\u044C") // @ts-ignore
+      ,
+      toggleRef: /*#__PURE__*/React.createRef()
+    }, /*#__PURE__*/React.createElement(ActionSheetItem, {
+      autoclose: true,
+      onClick: () => this.setPodcast({
+        access: 'all'
+      })
+    }, namePodcastAccess['all']), /*#__PURE__*/React.createElement(ActionSheetItem, {
+      autoclose: true,
+      onClick: () => this.setPodcast({
+        access: 'admins-only'
+      })
+    }, namePodcastAccess['admins-only'])));
   }
 
   render() {
@@ -165,16 +188,23 @@ export class Creating extends React.Component {
       onChange: e => this.setPodcast({
         trailer: e.target.checked
       })
-    }, "\u0422\u0440\u0435\u0439\u043B\u0435\u0440 \u043F\u043E\u0434\u043A\u0430\u0441\u0442\u0430")), /*#__PURE__*/React.createElement(Div, null, "TODO: \u041A\u043E\u043C\u0443 \u0434\u043E\u0441\u0442\u0443\u043F\u0435\u043D"), /*#__PURE__*/React.createElement(Div, {
+    }, "\u0422\u0440\u0435\u0439\u043B\u0435\u0440 \u043F\u043E\u0434\u043A\u0430\u0441\u0442\u0430")), /*#__PURE__*/React.createElement(SimpleCell, {
+      style: {
+        marginTop: 14
+      },
+      after: /*#__PURE__*/React.createElement(Icon24Chevron, null),
+      description: namePodcastAccess[podcast.access],
+      onClick: this.openAccess
+    }, "\u041A\u043E\u043C\u0443 \u0434\u043E\u0441\u0442\u0443\u043F\u0435\u043D \u0434\u0430\u043D\u043D\u044B\u0439 \u043F\u043E\u0434\u043A\u0430\u0441\u0442"), /*#__PURE__*/React.createElement(Div, {
       style: {
         paddingTop: 4,
         paddingBottom: 24,
-        color: 'var(--text_secondary)'
+        color: 'var(--icon_tertiary)'
       }
     }, /*#__PURE__*/React.createElement(Caption, {
       level: "1",
       weight: "regular"
-    }, podcast.access === 'all' && 'При публикации записи с эпизодом, он становится доступным для всех пользователей', podcast.access === 'admins-only' && 'При публикации записи с эпизодом, он становится доступен только руководителям сообщества')), /*#__PURE__*/React.createElement("div", {
+    }, descriptionPodcastAccess[podcast.access])), /*#__PURE__*/React.createElement("div", {
       style: {
         height: 68
       }
