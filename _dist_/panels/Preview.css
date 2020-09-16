@@ -1,0 +1,23 @@
+.Cover {
+    width: 72px;
+    height: 72px;
+    background-size: cover;
+    background-position: center;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    box-sizing: border-box;
+    outline: none;
+    text-decoration: none;
+}
+
+.Cover .Button {
+    width: 32px;
+    height: 32px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 50%;
+    background-color: rgba(255, 255, 255, .35);
+    color: #fff;
+}

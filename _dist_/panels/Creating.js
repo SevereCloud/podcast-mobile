@@ -1,0 +1,133 @@
+function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
+
+import React from '../../web_modules/react.js';
+import { Button, Checkbox, Div, FixedLayout, FormLayout, Input, PanelHeader, PanelHeaderBack, Placeholder, Separator, Textarea, File } from '../../web_modules/@vkontakte/vkui.js';
+import { Icon56GalleryOutline } from '../../web_modules/@vkontakte/icons.js';
+import CoverLoader from '../components/CoverLoader/CoverLoader.js';
+export class Creating extends React.Component {
+  constructor(props) {
+    super(props);
+
+    _defineProperty(this, "setPodcast", podcast => {
+      const newPodcast = Object.assign({}, this.state.podcast, podcast);
+      this.setState({
+        podcast: newPodcast
+      });
+    });
+
+    this.state = {
+      highlightErrors: false,
+      podcast: props.podcast
+    };
+    this.setPodcast = this.setPodcast.bind(this);
+  }
+
+  get isValid() {
+    const {
+      podcast
+    } = this.state;
+    return [podcast.image, podcast.name, podcast.description].every(e => e);
+  }
+
+  render() {
+    const {
+      goBack,
+      updatePodcast
+    } = this.props;
+    const {
+      highlightErrors,
+      podcast
+    } = this.state;
+    return /*#__PURE__*/React.createElement(React.Fragment, null, /*#__PURE__*/React.createElement(PanelHeader, {
+      left: /*#__PURE__*/React.createElement(PanelHeaderBack, {
+        onClick: () => goBack()
+      })
+    }, "\u041D\u043E\u0432\u044B\u0439 \u043F\u043E\u0434\u043A\u0430\u0441\u0442"), /*#__PURE__*/React.createElement(FormLayout, null, /*#__PURE__*/React.createElement(FormLayout, {
+      className: "FormLayoutRow"
+    }, /*#__PURE__*/React.createElement(CoverLoader, {
+      image: podcast.image,
+      onLoadImage: image => this.setPodcast({
+        image: image
+      }),
+      before: /*#__PURE__*/React.createElement(Icon56GalleryOutline, {
+        width: 32,
+        height: 32
+      })
+    }), /*#__PURE__*/React.createElement(Input, {
+      top: "\u041D\u0430\u0437\u0432\u0430\u043D\u0438\u0435",
+      bottom: highlightErrors && !podcast.name ? 'Пожалуйста, введите название подкаста' : '',
+      status: highlightErrors && !podcast.name ? 'error' : 'default',
+      placeholder: "\u0412\u0432\u0435\u0434\u0438\u0442\u0435 \u043D\u0430\u0437\u0432\u0430\u043D\u0438\u0435 \u043F\u043E\u0434\u043A\u0430\u0441\u0442\u0430",
+      value: podcast.name,
+      onChange: e => this.setPodcast({
+        name: e.target.value
+      })
+    })), /*#__PURE__*/React.createElement(Textarea, {
+      top: "\u041E\u043F\u0438\u0441\u0430\u043D\u0438\u0435 \u043F\u043E\u0434\u043A\u0430\u0441\u0442\u0430",
+      bottom: highlightErrors && !podcast.description ? 'Пожалуйста, введите описание' : '',
+      status: highlightErrors && !podcast.description ? 'error' : 'default',
+      placeholder: "\u041D\u0430 \u0447\u0442\u043E \u043F\u043E\u0439\u0434\u0443\u0442 \u0434\u0435\u043D\u044C\u0433\u0438 \u0438 \u043A\u0430\u043A \u043E\u043D\u0438 \u043F\u043E\u043C\u043E\u0433\u0443\u0442?",
+      value: podcast.description,
+      onChange: e => this.setPodcast({
+        description: e.target.value
+      })
+    })), /*#__PURE__*/React.createElement(Placeholder, {
+      header: "\u0417\u0430\u0433\u0440\u0443\u0437\u0438\u0442\u0435 \u0432\u0430\u0448 \u043F\u043E\u0434\u043A\u0430\u0441\u0442",
+      action: /*#__PURE__*/React.createElement(File, {
+        controlSize: "m",
+        mode: "outline"
+      }, "\u0417\u0430\u0433\u0440\u0443\u0437\u0438\u0442\u044C \u0444\u0430\u0439\u043B")
+    }, "\u0412\u044B\u0431\u0435\u0440\u0438\u0442\u0435 \u0433\u043E\u0442\u043E\u0432\u044B\u0439 \u0430\u0443\u0434\u0438\u043E\u0444\u0430\u0439\u043B \u0438\u0437", /*#__PURE__*/React.createElement("br", null), "\u0432\u0430\u0448\u0435\u0433\u043E \u0442\u0435\u043B\u0435\u0444\u043E\u043D\u0430 \u0438 \u0434\u043E\u0431\u0430\u0432\u044C\u0442\u0435 \u0435\u0433\u043E"), /*#__PURE__*/React.createElement(Separator, null), /*#__PURE__*/React.createElement(FormLayout, null, /*#__PURE__*/React.createElement(Checkbox, {
+      style: {
+        margin: '-12px 0px',
+        padding: '12px 0px'
+      },
+      checked: podcast.explicitContent,
+      onChange: e => this.setPodcast({
+        explicitContent: e.target.checked
+      })
+    }, "\u041D\u0435\u043D\u043E\u0440\u043C\u0430\u0442\u0438\u0432\u043D\u044B\u0439 \u043A\u043E\u043D\u0442\u0435\u043D\u0442"), /*#__PURE__*/React.createElement(Checkbox, {
+      style: {
+        margin: '-12px 0px',
+        padding: '12px 0px'
+      },
+      checked: podcast.notExport,
+      onChange: e => this.setPodcast({
+        notExport: e.target.checked
+      })
+    }, "\u0418\u0441\u043A\u043B\u044E\u0447\u0438\u0442\u044C \u044D\u043F\u0438\u0437\u043E\u0434 \u0438\u0437 \u044D\u043A\u0441\u043F\u043E\u0440\u0442\u0430"), /*#__PURE__*/React.createElement(Checkbox, {
+      style: {
+        margin: '-12px 0px',
+        padding: '12px 0px'
+      },
+      checked: podcast.trailer,
+      onChange: e => this.setPodcast({
+        trailer: e.target.checked
+      })
+    }, "\u0422\u0440\u0435\u0439\u043B\u0435\u0440 \u043F\u043E\u0434\u043A\u0430\u0441\u0442\u0430")), /*#__PURE__*/React.createElement(Div, null, "TODO: \u041A\u043E\u043C\u0443 \u0434\u043E\u0441\u0442\u0443\u043F\u0435\u043D"), /*#__PURE__*/React.createElement(Div, {
+      style: {
+        paddingTop: 4,
+        paddingBottom: 24,
+        color: 'var(--text_secondary)'
+      }
+    }, podcast.access === 'all' && 'При публикации записи с эпизодом, он становится доступным для всех пользователей', podcast.access === 'admins-only' && 'При публикации записи с эпизодом, он становится доступен только руководителям сообщества'), /*#__PURE__*/React.createElement("div", {
+      style: {
+        height: 68
+      }
+    }), /*#__PURE__*/React.createElement(FixedLayout, {
+      filled: true,
+      vertical: "bottom"
+    }, /*#__PURE__*/React.createElement(Div, null, /*#__PURE__*/React.createElement(Button, {
+      stretched: true,
+      size: "l",
+      disabled: !this.isValid,
+      onClick: () => {
+        updatePodcast(podcast);
+      },
+      onBlur: () => this.setState({
+        highlightErrors: false
+      })
+    }, "\u0414\u0430\u043B\u0435\u0435"))));
+  }
+
+}
