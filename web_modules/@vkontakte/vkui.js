@@ -3833,4 +3833,4 @@ var PanelHeaderBack = function PanelHeaderBack(props) {
 
 var PanelHeaderBack$1 = /*#__PURE__*/react.memo(PanelHeaderBack);
 
-export { Button$1 as Button, Card, Checkbox$1 as Checkbox, Div, File, FixedLayout$1 as FixedLayout, FormLayout, Group$1 as Group, Header, Input$1 as Input, Link, Panel$1 as Panel, PanelHeader$1 as PanelHeader, PanelHeaderBack$1 as PanelHeaderBack, Placeholder, Progress, Root$1 as Root, Separator$1 as Separator, SimpleCell$1 as SimpleCell, Tappable$1 as Tappable, Text, Textarea$1 as Textarea, View$1 as View, classNames, getClassname as getClassName, usePlatform, withPlatform };
+export { Button$1 as Button, Caption, Card, Checkbox$1 as Checkbox, Div, File, FixedLayout$1 as FixedLayout, FormLayout, Group$1 as Group, Header, Input$1 as Input, Link, Panel$1 as Panel, PanelHeader$1 as PanelHeader, PanelHeaderBack$1 as PanelHeaderBack, Placeholder, Progress, Root$1 as Root, Separator$1 as Separator, SimpleCell$1 as SimpleCell, Tappable$1 as Tappable, Text, Textarea$1 as Textarea, View$1 as View, classNames, getClassname as getClassName, usePlatform, withPlatform };

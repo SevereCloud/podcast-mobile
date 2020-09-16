@@ -1,7 +1,7 @@
 function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
 
 import React from '../../web_modules/react.js';
-import { Button, Checkbox, Div, FixedLayout, FormLayout, Input, PanelHeader, PanelHeaderBack, Placeholder, Separator, Textarea, File, SimpleCell } from '../../web_modules/@vkontakte/vkui.js';
+import { Button, Checkbox, Div, FixedLayout, FormLayout, Input, PanelHeader, PanelHeaderBack, Placeholder, Separator, Textarea, File, SimpleCell, Caption } from '../../web_modules/@vkontakte/vkui.js';
 import { Icon28PodcastOutline, Icon56GalleryOutline } from '../../web_modules/@vkontakte/icons.js';
 import CoverLoader from '../components/CoverLoader/CoverLoader.js';
 import { timeFormat } from '../lib.js';
@@ -115,13 +115,15 @@ export class Creating extends React.Component {
           color: 'var(--text_secondary)'
         }
       }, timeFormat(podcast.originalDuration))
-    }, podcast.originalAudioName), /*#__PURE__*/React.createElement(Div, {
+    }, podcast.originalAudioName), /*#__PURE__*/React.createElement(Div, null, /*#__PURE__*/React.createElement(Caption, {
+      level: "1",
+      weight: "regular",
       style: {
         color: 'var(--text_secondary)'
       }
-    }, "\u0412\u044B \u043C\u043E\u0436\u0435\u0442\u0435 \u0434\u043E\u0431\u0430\u0432\u0438\u0442\u044C \u0442\u0430\u0439\u043C\u043A\u043E\u0434\u044B \u0438 \u0441\u043A\u043E\u0440\u0440\u0435\u043A\u0442\u0438\u0440\u043E\u0432\u0430\u0442\u044C \u043F\u043E\u0434\u043A\u0430\u0441\u0442 \u0432 \u0440\u0435\u0436\u0438\u043C\u0435 \u0440\u0435\u0434\u0430\u043A\u0442\u0438\u0440\u043E\u0432\u0430\u043D\u0438\u044F"), /*#__PURE__*/React.createElement(Div, null, /*#__PURE__*/React.createElement(Button, {
+    }, "\u0412\u044B \u043C\u043E\u0436\u0435\u0442\u0435 \u0434\u043E\u0431\u0430\u0432\u0438\u0442\u044C \u0442\u0430\u0439\u043C\u043A\u043E\u0434\u044B \u0438 \u0441\u043A\u043E\u0440\u0440\u0435\u043A\u0442\u0438\u0440\u043E\u0432\u0430\u0442\u044C \u043F\u043E\u0434\u043A\u0430\u0441\u0442 \u0432 \u0440\u0435\u0436\u0438\u043C\u0435 \u0440\u0435\u0434\u0430\u043A\u0442\u0438\u0440\u043E\u0432\u0430\u043D\u0438\u044F")), /*#__PURE__*/React.createElement(Div, null, /*#__PURE__*/React.createElement(Button, {
       stretched: true,
-      size: "m",
+      size: "l",
       mode: "outline",
       onClick: () => {
         updatePodcast(podcast);
@@ -168,7 +170,10 @@ export class Creating extends React.Component {
         paddingBottom: 24,
         color: 'var(--text_secondary)'
       }
-    }, podcast.access === 'all' && 'При публикации записи с эпизодом, он становится доступным для всех пользователей', podcast.access === 'admins-only' && 'При публикации записи с эпизодом, он становится доступен только руководителям сообщества'), /*#__PURE__*/React.createElement("div", {
+    }, /*#__PURE__*/React.createElement(Caption, {
+      level: "1",
+      weight: "regular"
+    }, podcast.access === 'all' && 'При публикации записи с эпизодом, он становится доступным для всех пользователей', podcast.access === 'admins-only' && 'При публикации записи с эпизодом, он становится доступен только руководителям сообщества')), /*#__PURE__*/React.createElement("div", {
       style: {
         height: 68
       }
