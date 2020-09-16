@@ -18,6 +18,10 @@ export interface Podcast {
   access: 'all' | 'admins-only';
 
   timeCodes: TimeCode[];
+
+  originalAudioName: string;
+  originalDuration: number;
+  audioSource?: MediaElementAudioSourceNode;
 }
 
 export const defaultPodcast: Podcast = {
@@ -37,4 +41,7 @@ export const defaultPodcast: Podcast = {
       time: 123,
     },
   ],
+
+  originalAudioName: '',
+  originalDuration: 0,
 };

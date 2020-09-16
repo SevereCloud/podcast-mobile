@@ -1,25 +1,23 @@
-import React from 'react';
+import React, { ChangeEvent } from 'react';
 import {
   Button,
   Checkbox,
   Div,
   FixedLayout,
   FormLayout,
-  FormLayoutGroup,
   Input,
-  Panel,
   PanelHeader,
   PanelHeaderBack,
   Placeholder,
-  Root,
   Separator,
   Textarea,
-  View,
   File,
+  SimpleCell,
 } from '@vkontakte/vkui';
-import { Icon56GalleryOutline } from '@vkontakte/icons';
+import { Icon28PodcastOutline, Icon56GalleryOutline } from '@vkontakte/icons';
 import type { Podcast } from '../types';
 import CoverLoader from '../components/CoverLoader/CoverLoader';
+import { timeFormat } from '../lib';
 
 interface CreatingState {
   highlightErrors: boolean;
@@ -57,8 +55,31 @@ export class Creating extends React.Component<CreatingProps, CreatingState> {
     this.setState({ podcast: newPodcast });
   };
 
+  change = (input: ChangeEvent<HTMLInputElement>) => {
+    if (input.target.files && input.target.files[0]) {
+      this.setPodcast({ originalAudioName: input.target.files[0].name });
+
+      let reader = new FileReader();
+      reader.onload = (e) => {
+        const audio = document.createElement('audio');
+        if (e.target && typeof e.target.result === 'string') {
+          audio.src = e.target.result;
+          audio.onloadedmetadata = () => {
+            this.setPodcast({ originalDuration: audio.duration });
+            console.log(audio.duration);
+          };
+          const context = new window.AudioContext();
+          const source = context.createMediaElementSource(audio);
+          this.setPodcast({ audioSource: source });
+        }
+      };
+
+      reader.readAsDataURL(input.target.files[0]);
+    }
+  };
+
   render(): JSX.Element {
-    const { goBack, updatePodcast } = this.props;
+    const { setPanel, goBack, updatePodcast } = this.props;
     const { highlightErrors, podcast } = this.state;
 
     return (
@@ -101,18 +122,59 @@ export class Creating extends React.Component<CreatingProps, CreatingState> {
             onChange={(e) => this.setPodcast({ description: e.target.value })}
           />
         </FormLayout>
-        <Placeholder
-          header="Загрузите ваш подкаст"
-          action={
-            <File controlSize="m" mode="outline">
-              Загрузить файл
-            </File>
-          }
-        >
-          Выберите готовый аудиофайл из
-          <br />
-          вашего телефона и добавьте его
-        </Placeholder>
+        {podcast.audioSource ? (
+          <>
+            <SimpleCell
+              disabled
+              before={
+              <div className="PodcastIcon">
+                <Icon28PodcastOutline />
+              </div>}
+              after={
+                <div style={{ color: 'var(--text_secondary)' }}>
+                  {timeFormat(podcast.originalDuration)}
+                </div>
+              }
+            >
+              {podcast.originalAudioName}
+            </SimpleCell>
+            <Div style={{ color: 'var(--text_secondary)' }}>
+              Вы можете добавить таймкоды и скорректировать подкаст в режиме
+              редактирования
+            </Div>
+            <Div>
+              <Button
+                stretched
+                size="m"
+                mode="outline"
+                onClick={() => {
+                  updatePodcast(podcast);
+                  setPanel('edit');
+                }}
+              >
+                Редактировать аудиозапись
+              </Button>
+            </Div>
+          </>
+        ) : (
+          <Placeholder
+            header="Загрузите ваш подкаст"
+            action={
+              <File
+                controlSize="m"
+                mode="outline"
+                accept="audio/*"
+                onChange={this.change}
+              >
+                Загрузить файл
+              </File>
+            }
+          >
+            Выберите готовый аудиофайл из
+            <br />
+            вашего телефона и добавьте его
+          </Placeholder>
+        )}
         <Separator />
         <FormLayout>
           <Checkbox
@@ -161,6 +223,7 @@ export class Creating extends React.Component<CreatingProps, CreatingState> {
               disabled={!this.isValid}
               onClick={() => {
                 updatePodcast(podcast);
+                setPanel('preview');
               }}
               onBlur={() => this.setState({ highlightErrors: false })}
             >

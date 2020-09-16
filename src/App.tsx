@@ -10,6 +10,7 @@ import { Main } from './panels/Main';
 import { defaultPodcast, Podcast } from './types';
 import { Creating } from './panels/Creating';
 import { Preview } from './panels/Preview';
+import { Edit } from './panels/Edit';
 
 interface AppState {
   scheme: AppearanceSchemeType;
@@ -20,6 +21,7 @@ interface AppState {
   userInfo: UserInfo;
 
   podcast: Podcast;
+  audio?: MediaElementAudioSourceNode;
   podcastDone: boolean;
 }
 
@@ -139,11 +141,19 @@ export class App extends React.Component<AppProps, AppState> {
               podcast={podcast}
               updatePodcast={(p) => {
                 this.setState({ podcast: p });
-                this.setPanel('preview');
               }}
             />
           </Panel>
-          <Panel id="edit"></Panel>
+          <Panel id="edit">
+            <Edit
+              setPanel={this.setPanel}
+              goBack={this.goBack}
+              podcast={podcast}
+              updatePodcast={(p) => {
+                this.setState({ podcast: p });
+              }}
+            />
+          </Panel>
           <Panel id="music-chose"></Panel>
           <Panel id="preview">
             <Preview
