@@ -48,7 +48,12 @@ export class Creating extends React.Component<CreatingProps, CreatingState> {
 
   get isValid() {
     const { podcast } = this.state;
-    return [podcast.image, podcast.name, podcast.description, podcast.audioSource].every((e) => e);
+    return [
+      podcast.image,
+      podcast.name,
+      podcast.description,
+      podcast.audioSource,
+    ].every((e) => e);
   }
 
   setPodcast = (podcast: Partial<Podcast>): void => {

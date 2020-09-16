@@ -36,12 +36,7 @@ export const defaultPodcast: Podcast = {
 
   access: 'all',
 
-  timeCodes: [
-    {
-      name: 'test',
-      time: 123,
-    },
-  ],
+  timeCodes: [],
 
   audioComponent: document.createElement('audio'),
   originalAudioName: '',
