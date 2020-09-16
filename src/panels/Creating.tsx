@@ -13,6 +13,7 @@ import {
   Textarea,
   File,
   SimpleCell,
+  Caption,
 } from '@vkontakte/vkui';
 import { Icon28PodcastOutline, Icon56GalleryOutline } from '@vkontakte/icons';
 import type { Podcast } from '../types';
@@ -139,14 +140,20 @@ export class Creating extends React.Component<CreatingProps, CreatingState> {
             >
               {podcast.originalAudioName}
             </SimpleCell>
-            <Div style={{ color: 'var(--text_secondary)' }}>
-              Вы можете добавить таймкоды и скорректировать подкаст в режиме
-              редактирования
+            <Div>
+              <Caption
+                level="1"
+                weight="regular"
+                style={{ color: 'var(--text_secondary)' }}
+              >
+                Вы можете добавить таймкоды и скорректировать подкаст в режиме
+                редактирования
+              </Caption>
             </Div>
             <Div>
               <Button
                 stretched
-                size="m"
+                size="l"
                 mode="outline"
                 onClick={() => {
                   updatePodcast(podcast);
@@ -210,10 +217,12 @@ export class Creating extends React.Component<CreatingProps, CreatingState> {
             color: 'var(--text_secondary)',
           }}
         >
-          {podcast.access === 'all' &&
-            'При публикации записи с эпизодом, он становится доступным для всех пользователей'}
-          {podcast.access === 'admins-only' &&
-            'При публикации записи с эпизодом, он становится доступен только руководителям сообщества'}
+          <Caption level="1" weight="regular">
+            {podcast.access === 'all' &&
+              'При публикации записи с эпизодом, он становится доступным для всех пользователей'}
+            {podcast.access === 'admins-only' &&
+              'При публикации записи с эпизодом, он становится доступен только руководителям сообщества'}
+          </Caption>
         </Div>
         <div style={{ height: 68 }} />
         <FixedLayout filled vertical="bottom">
