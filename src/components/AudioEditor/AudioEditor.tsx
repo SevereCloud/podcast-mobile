@@ -23,7 +23,7 @@ interface IAudioEditorProps {
 }
 
 const AudioEditor: FunctionComponent<IAudioEditorProps> = ({ podcast }) => {
-	const { audioComponent } = podcast;
+	const { audioFile } = podcast;
 	const [shouldMusicPlay, setShouldMusicPlay] = useState<boolean>(false);
 	const [didMount, setDidMount] = useState<boolean>(false);
 	// eslint-disable-next-line
@@ -34,6 +34,8 @@ const AudioEditor: FunctionComponent<IAudioEditorProps> = ({ podcast }) => {
 				barWidth: 2,
 				barRadius: 2,
 				barGap: 4,
+				barMinHeight: 2,
+				barHeight: 0.75,
 				cursorWidth: 1,
 				container: '#waveform',
 				backend: 'WebAudio',
@@ -43,7 +45,7 @@ const AudioEditor: FunctionComponent<IAudioEditorProps> = ({ podcast }) => {
 				waveColor: '#EFEFEF',
 				cursorColor: 'transparent',
 			});
-			wavesurfer.load('https://www.mfiles.co.uk/mp3-downloads/gs-cd-track2.mp3');
+			wavesurfer.loadBlob(audioFile!);
 
 			setDidMount(true);
 			setWavesurfer(wavesurfer);
@@ -55,6 +57,13 @@ const AudioEditor: FunctionComponent<IAudioEditorProps> = ({ podcast }) => {
 				wavesurfer.pause()
 			}
 		}
+
+		// stop playing podcast on unmoun
+		return () => {
+			if (wavesurfer && wavesurfer.isPlaying()) {
+				wavesurfer.pause();
+			}
+		}
 	}, [shouldMusicPlay]);
 
 	return (
@@ -62,9 +71,7 @@ const AudioEditor: FunctionComponent<IAudioEditorProps> = ({ podcast }) => {
 			<CardGrid>
 				<Card size="l" mode="outline">
 					<div style={{ height: 26 }} />
-					<div style={{ height: 90 }}>
-						<div id="waveform" style={{ height: '100%', background: '#f2f3f5' }} />
-					</div>
+					<div id="waveform" style={{ height: 90, background: '#f2f3f5' }} />
 					<Div>
 						<Button
 							style={{ width: 44 }}
