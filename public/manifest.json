@@ -2,8 +2,8 @@
     "name": "Подкасты",
     "short_name": "Подкасты",
     "lang": "ru-RU",
-    "start_url": "",
-    "display": "fullscreen",
+    "start_url": "/podcast-mobile/",
+    "display": "standalone",
     "theme_color": "#ffffff",
     "dir": "ltr",
     "icons": [
