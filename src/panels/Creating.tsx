@@ -164,7 +164,7 @@ export class Creating extends React.Component<CreatingProps, CreatingState> {
             status={
               highlightErrors && !podcast.description ? 'error' : 'default'
             }
-            placeholder="На что пойдут деньги и как они помогут?"
+            placeholder=""
             value={podcast.description}
             onChange={(e) => this.setPodcast({ description: e.target.value })}
           />
