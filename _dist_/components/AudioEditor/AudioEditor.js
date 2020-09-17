@@ -88,8 +88,10 @@ const AudioEditor = ({
   }, /*#__PURE__*/React.createElement("div", {
     id: "timeline",
     style: {
-      height: 26
-    }
+      height: 26,
+      background: '#f2f3f5'
+    },
+    className: "timeline-border"
   }), /*#__PURE__*/React.createElement(Separator, {
     wide: true
   }), /*#__PURE__*/React.createElement("div", {

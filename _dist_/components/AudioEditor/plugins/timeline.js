@@ -206,7 +206,8 @@ export default class TimelinePlugin {
       position: 'relative',
       userSelect: 'none',
       webkitUserSelect: 'none',
-      height: `${this.params.height}px`
+      height: `${this.params.height}px`,
+      paddingBottom: '10px'
     });
 
     if (wsParams.fillParent || wsParams.scrollParent) {
@@ -358,8 +359,8 @@ export default class TimelinePlugin {
     this.setFillStyles(this.params.primaryFontColor);
     renderPositions((i, curSeconds, curPixel) => {
       if (i % primaryLabelInterval === 0) {
-        this.fillRect(curPixel, 0, 1, height1);
-        this.fillText(formatTime(curSeconds, pixelsPerSecond), curPixel + this.params.labelPadding * this.pixelRatio, height1);
+        this.fillRect(curPixel, this.params.height + height2, 1, height2);
+        this.fillText(formatTime(curSeconds, pixelsPerSecond), curPixel + this.params.labelPadding * this.pixelRatio, height1 - height2);
       }
     }); // render secondary labels
 
@@ -368,15 +369,15 @@ export default class TimelinePlugin {
     this.setFillStyles(this.params.secondaryFontColor);
     renderPositions((i, curSeconds, curPixel) => {
       if (i % secondaryLabelInterval === 0) {
-        this.fillRect(curPixel, 0, 1, height1);
-        this.fillText(formatTime(curSeconds, pixelsPerSecond), curPixel + this.params.labelPadding * this.pixelRatio, height1);
+        this.fillRect(curPixel, this.params.height + height2, 1, height2);
+        this.fillText(formatTime(curSeconds, pixelsPerSecond), curPixel + this.params.labelPadding * this.pixelRatio, height1 - height2);
       }
     }); // render the actual notches (when no labels are used)
 
     this.setFillStyles(this.params.unlabeledNotchColor);
     renderPositions((i, curSeconds, curPixel) => {
       if (i % secondaryLabelInterval !== 0 && i % primaryLabelInterval !== 0) {
-        this.fillRect(curPixel, 0, 1, height2);
+        this.fillRect(curPixel, this.params.height + height2 * 1.5, 1, height2 * 0.5);
       }
     });
   }
