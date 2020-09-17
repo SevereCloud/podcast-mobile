@@ -226,6 +226,7 @@ export default class TimelinePlugin {
             userSelect: 'none',
             webkitUserSelect: 'none',
             height: `${this.params.height}px`,
+            paddingBottom: '10px',
         });
 
         if (wsParams.fillParent || wsParams.scrollParent) {
@@ -388,11 +389,16 @@ export default class TimelinePlugin {
         this.setFillStyles(this.params.primaryFontColor);
         renderPositions((i, curSeconds, curPixel) => {
             if (i % primaryLabelInterval === 0) {
-                this.fillRect(curPixel, 0, 1, height1);
+                this.fillRect(
+                    curPixel,
+                    this.params.height + height2,
+                    1,
+                    height2,
+                );
                 this.fillText(
                     formatTime(curSeconds, pixelsPerSecond),
                     curPixel + this.params.labelPadding * this.pixelRatio,
-                    height1
+                    height1 - height2
                 );
             }
         });
@@ -403,11 +409,16 @@ export default class TimelinePlugin {
         this.setFillStyles(this.params.secondaryFontColor);
         renderPositions((i, curSeconds, curPixel) => {
             if (i % secondaryLabelInterval === 0) {
-                this.fillRect(curPixel, 0, 1, height1);
+                this.fillRect(
+                    curPixel,
+                    this.params.height + height2,
+                    1,
+                    height2,
+                );
                 this.fillText(
                     formatTime(curSeconds, pixelsPerSecond),
                     curPixel + this.params.labelPadding * this.pixelRatio,
-                    height1
+                    height1 - height2
                 );
             }
         });
@@ -419,7 +430,12 @@ export default class TimelinePlugin {
                 i % secondaryLabelInterval !== 0 &&
                 i % primaryLabelInterval !== 0
             ) {
-                this.fillRect(curPixel, 0, 1, height2);
+                this.fillRect(
+                    curPixel,
+                    this.params.height + height2 * 1.5,
+                    1,
+                    height2 * 0.5,
+                );
             }
         });
     }

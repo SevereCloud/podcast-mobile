@@ -109,7 +109,11 @@ const AudioEditor: FunctionComponent<IAudioEditorProps> = ({ podcast }) => {
 		<Group separator="hide">
 			<CardGrid>
 				<Card size="l" mode="outline">
-					<div id="timeline" style={{ height: 26 }} />
+					<div
+						id="timeline"
+						style={{ height: 26, background: '#f2f3f5' }}
+						className="timeline-border"
+					/>
 
 					<Separator wide />
 
