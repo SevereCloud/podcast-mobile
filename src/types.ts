@@ -37,15 +37,24 @@ export const defaultPodcast: Podcast = {
 
   access: 'all',
 
-  timeCodes: [
-    {
-      name: 'test',
-      time: 123,
-    },
-  ],
+  timeCodes: [],
 
   audioComponent: document.createElement('audio'),
   originalAudioName: '',
   originalDuration: 0,
   audioFile: null,
+};
+
+export const namePodcastAccess: { [key in Podcast['access']]: string } = {
+  'admins-only': 'Администраторам',
+  all: 'Всем пользователям',
+};
+
+export const descriptionPodcastAccess: {
+  [key in Podcast['access']]: string;
+} = {
+  'admins-only':
+    'При публикации записи с эпизодом, он становится доступен только руководителям сообщества',
+  all:
+    'При публикации записи с эпизодом, он становится доступным для всех пользователей',
 };

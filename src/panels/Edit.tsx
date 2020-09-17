@@ -16,6 +16,7 @@ import { Icon16Play } from '@vkontakte/icons';
 import type { Podcast } from '../types';
 import AudioEditor from '../components/AudioEditor';
 import { timeFormat } from '../lib';
+import TimeCodeEditor from '../components/TimeCodeEditor/TimeCodeEditor';
 
 interface EditState {
   highlightErrors: boolean;
@@ -63,6 +64,7 @@ export class Edit extends React.Component<EditProps, EditState> {
           Редактирование
         </PanelHeader>
         <AudioEditor podcast={podcast} />
+        <TimeCodeEditor podcast={podcast} updatePodcast={updatePodcast} />
       </>
     );
   }

@@ -11,10 +11,13 @@ import {
   Card,
   Link,
   Group,
+  Headline,
+  Caption,
 } from '@vkontakte/vkui';
 import { Icon16Play } from '@vkontakte/icons';
 import type { Podcast } from '../types';
 import { timeFormat } from '../lib';
+import type { GroupInfo } from '@vkontakte/vk-bridge';
 
 interface PreviewState {
   highlightErrors: boolean;
@@ -25,6 +28,8 @@ export interface PreviewProps {
   // setView: (view: string, name?: string) => void;
   setPanel: (name: string) => void;
   goBack: () => void;
+
+  groupInfo: GroupInfo;
 
   podcast: Podcast;
   publishPodcast: (p: Podcast) => void;
@@ -53,7 +58,7 @@ export class Preview extends React.Component<PreviewProps, PreviewState> {
   };
 
   render(): JSX.Element {
-    const { goBack, podcast, publishPodcast } = this.props;
+    const { goBack, groupInfo, podcast, publishPodcast } = this.props;
     // const {  } = this.state;
 
     return (
@@ -62,7 +67,7 @@ export class Preview extends React.Component<PreviewProps, PreviewState> {
           Новый подкаст
         </PanelHeader>
         <Group>
-          <Div style={{ display: 'flex' }}>
+          <Div className="PodcastInfo">
             <Card
               className="Cover"
               style={{ backgroundImage: `url(${podcast.image})` }}
@@ -71,9 +76,23 @@ export class Preview extends React.Component<PreviewProps, PreviewState> {
                 <Icon16Play />
               </div>
             </Card>
-            Картинка
-            {podcast.name}
-            Сообщество длительность
+            <div className="PodcastInfo__text">
+              <Headline weight="medium">{podcast.name}</Headline>
+              <Caption
+                weight="regular"
+                level="2"
+                style={{ color: 'var(--text_name)' }}
+              >
+                Сообщество {groupInfo.name}
+              </Caption>
+              <Caption
+                weight="regular"
+                level="2"
+                style={{ color: 'var(--text_secondary)' }}
+              >
+                Длительность: {timeFormat(podcast.originalDuration)}
+              </Caption>
+            </div>
           </Div>
         </Group>
         <Group>
