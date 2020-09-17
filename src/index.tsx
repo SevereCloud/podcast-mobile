@@ -6,6 +6,7 @@ import bridge from '@vkontakte/vk-bridge';
 
 import '@vkontakte/vkui/dist/vkui.css';
 import './components/CoverLoader/CoverLoader.css';
+import './components/AudioEditor/AudioEditor.css';
 import './components/TimeCodeEditor/TimeCodeEditor.css';
 import './panels/Preview.css';
 import './panels/Creating.css';

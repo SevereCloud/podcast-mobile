@@ -91,7 +91,9 @@ export class Creating extends React.Component<CreatingProps, CreatingState> {
         }
       };
 
-      reader.readAsDataURL(input.target.files[0]);
+      const audioFile = input.target.files[0];
+      reader.readAsDataURL(audioFile);
+      this.setPodcast({ audioFile });
     }
   };
 
@@ -209,24 +211,24 @@ export class Creating extends React.Component<CreatingProps, CreatingState> {
             </Div>
           </>
         ) : (
-          <Placeholder
-            header="Загрузите ваш подкаст"
-            action={
-              <File
-                controlSize="m"
-                mode="outline"
-                accept="audio/*"
-                onChange={this.change}
-              >
-                Загрузить файл
+            <Placeholder
+              header="Загрузите ваш подкаст"
+              action={
+                <File
+                  controlSize="m"
+                  mode="outline"
+                  accept="audio/*"
+                  onChange={this.change}
+                >
+                  Загрузить файл
               </File>
-            }
-          >
-            Выберите готовый аудиофайл из
-            <br />
+              }
+            >
+              Выберите готовый аудиофайл из
+              <br />
             вашего телефона и добавьте его
-          </Placeholder>
-        )}
+            </Placeholder>
+          )}
         <Separator />
         <FormLayout>
           <Checkbox

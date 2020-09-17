@@ -23,6 +23,7 @@ export interface Podcast {
   originalAudioName: string;
   originalDuration: number;
   audioSource?: MediaElementAudioSourceNode;
+  audioFile: File | null;
 }
 
 export const defaultPodcast: Podcast = {
@@ -41,6 +42,7 @@ export const defaultPodcast: Podcast = {
   audioComponent: document.createElement('audio'),
   originalAudioName: '',
   originalDuration: 0,
+  audioFile: null,
 };
 
 export const namePodcastAccess: { [key in Podcast['access']]: string } = {
