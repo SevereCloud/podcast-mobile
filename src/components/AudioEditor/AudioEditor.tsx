@@ -27,7 +27,7 @@ import {
 
 import type { Podcast } from '../../types';
 import WaveSurfer from 'wavesurfer.js';
-// import TimelinePlugin from './timeline';
+import TimelinePlugin from './plugins/timeline';
 interface IAudioEditorProps {
 	podcast: Podcast;
 }
@@ -58,7 +58,6 @@ const AudioEditor: FunctionComponent<IAudioEditorProps> = ({ podcast }) => {
 				// waveColor: '#EFEFEF',
 				//cursorColor: 'transparent',
 				plugins: [
-					/**
 					TimelinePlugin.create({
 						container: '#timeline',
 						labelPadding: 0,
@@ -76,10 +75,9 @@ const AudioEditor: FunctionComponent<IAudioEditorProps> = ({ podcast }) => {
 						primaryFontColor: '#99a2ad',
 						secondaryFontColor: '#99a2ad',
 						fontSize: 9,
-						height: 21,
+						height: 26,
 						notchPercentHeight: 33,
 					}),
-					 */
 				]
 			});
 			wavesurfer.loadBlob(audioFile!);
