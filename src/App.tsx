@@ -188,7 +188,6 @@ export class App extends React.Component<AppProps, AppState> {
             <Preview
               setPanel={this.setPanel}
               goBack={this.goBack}
-              groupInfo={groupInfo}
               podcast={podcast}
               publishPodcast={() => {
                 this.setPanel('main');

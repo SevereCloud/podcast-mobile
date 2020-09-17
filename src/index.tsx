@@ -5,6 +5,7 @@ import { VKMiniAppAPI } from '@vkontakte/vk-mini-apps-api';
 import bridge from '@vkontakte/vk-bridge';
 
 import '@vkontakte/vkui/dist/vkui.css';
+import './components/PodcastSnippet/PodcastSnippet.css';
 import './components/CoverLoader/CoverLoader.css';
 import './components/AudioEditor/AudioEditor.css';
 import './components/TimeCodeEditor/TimeCodeEditor.css';

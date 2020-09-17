@@ -10,6 +10,7 @@ export interface Podcast {
   image: string;
   name: string;
   description: string;
+  author: string;
 
   notExport: boolean;
   trailer: boolean;
@@ -30,6 +31,7 @@ export const defaultPodcast: Podcast = {
   image: '',
   name: '',
   description: '',
+  author: '«Медуза»',
 
   notExport: false,
   trailer: false,

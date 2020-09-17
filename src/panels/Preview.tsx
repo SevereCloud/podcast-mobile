@@ -18,6 +18,7 @@ import { Icon16Play } from '@vkontakte/icons';
 import type { Podcast } from '../types';
 import { timeFormat } from '../lib';
 import type { GroupInfo } from '@vkontakte/vk-bridge';
+import PodcastSnippet from '../components/PodcastSnippet/PodcastSnippet';
 
 interface PreviewState {
   highlightErrors: boolean;
@@ -28,8 +29,6 @@ export interface PreviewProps {
   // setView: (view: string, name?: string) => void;
   setPanel: (name: string) => void;
   goBack: () => void;
-
-  groupInfo: GroupInfo;
 
   podcast: Podcast;
   publishPodcast: (p: Podcast) => void;
@@ -58,7 +57,7 @@ export class Preview extends React.Component<PreviewProps, PreviewState> {
   };
 
   render(): JSX.Element {
-    const { goBack, groupInfo, podcast, publishPodcast } = this.props;
+    const { goBack, podcast, publishPodcast } = this.props;
     // const {  } = this.state;
 
     return (
@@ -83,7 +82,7 @@ export class Preview extends React.Component<PreviewProps, PreviewState> {
                 level="2"
                 style={{ color: 'var(--text_name)' }}
               >
-                Сообщество {groupInfo.name}
+                Сообщество {podcast.author}
               </Caption>
               <Caption
                 weight="regular"
@@ -111,6 +110,12 @@ export class Preview extends React.Component<PreviewProps, PreviewState> {
             ))}
           </Group>
         )}
+        <Group>
+          <Header>Сниппет:</Header>
+          <Div>
+            <PodcastSnippet podcast={podcast} />
+          </Div>
+        </Group>
         <div style={{ height: 68 }} />
         <FixedLayout filled vertical="bottom">
           <Div>
