@@ -19,9 +19,7 @@ export class Creating extends React.Component {
 
     _defineProperty(this, "change", input => {
       if (input.target.files && input.target.files[0]) {
-        this.setPodcast({
-          originalAudioName: input.target.files[0].name
-        });
+        const originalAudioName = input.target.files[0].name;
         let reader = new FileReader();
 
         reader.onload = e => {
@@ -34,14 +32,14 @@ export class Creating extends React.Component {
               this.setPodcast({
                 originalDuration: audio.duration
               });
-              console.log(audio.duration);
             };
 
             const context = new window.AudioContext();
             const source = context.createMediaElementSource(audio);
             this.setPodcast({
               audioComponent: audio,
-              audioSource: source
+              audioSource: source,
+              originalAudioName: originalAudioName
             });
           }
         };
@@ -59,6 +57,7 @@ export class Creating extends React.Component {
       podcast: props.podcast
     };
     this.openAccess = this.openAccess.bind(this);
+    this.change = this.change.bind(this);
   }
 
   get isValid() {
