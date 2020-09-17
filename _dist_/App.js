@@ -182,7 +182,6 @@ export class App extends React.Component {
     }, /*#__PURE__*/React.createElement(Preview, {
       setPanel: this.setPanel,
       goBack: this.goBack,
-      groupInfo: groupInfo,
       podcast: podcast,
       publishPodcast: () => {
         this.setPanel('main');

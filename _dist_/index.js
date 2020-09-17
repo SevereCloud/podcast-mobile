@@ -7,6 +7,7 @@ import { App } from './App.js';
 import { VKMiniAppAPI } from '../web_modules/@vkontakte/vk-mini-apps-api.js';
 import bridge from '../web_modules/@vkontakte/vk-bridge.js';
 import '../web_modules/@vkontakte/vkui/dist/vkui.css.proxy.js';
+import './components/PodcastSnippet/PodcastSnippet.css.proxy.js';
 import './components/CoverLoader/CoverLoader.css.proxy.js';
 import './components/AudioEditor/AudioEditor.css.proxy.js';
 import './components/TimeCodeEditor/TimeCodeEditor.css.proxy.js';

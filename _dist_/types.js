@@ -2,6 +2,7 @@ export const defaultPodcast = {
   image: '',
   name: '',
   description: '',
+  author: '«Медуза»',
   notExport: false,
   trailer: false,
   explicitContent: false,

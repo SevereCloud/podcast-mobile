@@ -4,6 +4,7 @@ import React from '../../web_modules/react.js';
 import { Button, Div, FixedLayout, PanelHeader, PanelHeaderBack, Text, Header, Card, Link, Group, Headline, Caption } from '../../web_modules/@vkontakte/vkui.js';
 import { Icon16Play } from '../../web_modules/@vkontakte/icons.js';
 import { timeFormat } from '../lib.js';
+import PodcastSnippet from '../components/PodcastSnippet/PodcastSnippet.js';
 export class Preview extends React.Component {
   constructor(props) {
     super(props);
@@ -32,7 +33,6 @@ export class Preview extends React.Component {
   render() {
     const {
       goBack,
-      groupInfo,
       podcast,
       publishPodcast
     } = this.props; // const {  } = this.state;
@@ -60,7 +60,7 @@ export class Preview extends React.Component {
       style: {
         color: 'var(--text_name)'
       }
-    }, "\u0421\u043E\u043E\u0431\u0449\u0435\u0441\u0442\u0432\u043E ", groupInfo.name), /*#__PURE__*/React.createElement(Caption, {
+    }, "\u0421\u043E\u043E\u0431\u0449\u0435\u0441\u0442\u0432\u043E ", podcast.author), /*#__PURE__*/React.createElement(Caption, {
       weight: "regular",
       level: "2",
       style: {
@@ -70,7 +70,9 @@ export class Preview extends React.Component {
       weight: "regular"
     }, podcast.description))), podcast.timeCodes.length > 0 && /*#__PURE__*/React.createElement(Group, null, /*#__PURE__*/React.createElement(Header, null, "\u0422\u0430\u0439\u043C\u043A\u043E\u0434\u044B:"), podcast.timeCodes.map((timeCode, index) => /*#__PURE__*/React.createElement(Div, {
       key: index
-    }, /*#__PURE__*/React.createElement(Link, null, timeFormat(timeCode.time)), " \u2014 ", timeCode.name))), /*#__PURE__*/React.createElement("div", {
+    }, /*#__PURE__*/React.createElement(Link, null, timeFormat(timeCode.time)), " \u2014 ", timeCode.name))), /*#__PURE__*/React.createElement(Group, null, /*#__PURE__*/React.createElement(Header, null, "\u0421\u043D\u0438\u043F\u043F\u0435\u0442:"), /*#__PURE__*/React.createElement(Div, null, /*#__PURE__*/React.createElement(PodcastSnippet, {
+      podcast: podcast
+    }))), /*#__PURE__*/React.createElement("div", {
       style: {
         height: 68
       }
