@@ -28,6 +28,8 @@ import {
 import type { Podcast } from '../../types';
 import WaveSurfer from 'wavesurfer.js';
 import TimelinePlugin from './plugins/timeline';
+import RegionsPlugin from './plugins/regions';
+
 interface IAudioEditorProps {
 	podcast: Podcast;
 }
@@ -78,12 +80,27 @@ const AudioEditor: FunctionComponent<IAudioEditorProps> = ({ podcast }) => {
 						height: 26,
 						notchPercentHeight: 33,
 					}),
+					RegionsPlugin.create({}),
 				]
 			});
 			wavesurfer.loadBlob(audioFile!);
 			wavesurfer.on('ready', () => {
 				setIsBlobLoading(false);
-				wavesurfer.getCurrentTime
+				wavesurfer.addRegion({
+					start: 0,
+					end: 10,
+					color: 'rgba(0, 0, 0, 0,1)',
+					handleStyle: {
+						left: {
+							backgroundColor: 'rgb(63, 138, 224)',
+							width: '6px',
+						},
+						right: {
+							backgroundColor: 'rgb(63, 138, 224)',
+							width: '6px',
+						},
+					},
+				})
 			});
 
 			setDidMount(true);
@@ -117,7 +134,7 @@ const AudioEditor: FunctionComponent<IAudioEditorProps> = ({ podcast }) => {
 
 					<Separator wide />
 
-					<div id="waveform" style={{ height: 90, background: '#f2f3f5' }} />
+					<div id="waveform" style={{ height: 96, background: '#f2f3f5' }} />
 
 					<div style={{ padding: 8 }}>
 						{isBlobLoading && (
