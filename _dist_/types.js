@@ -9,7 +9,8 @@ export const defaultPodcast = {
   timeCodes: [],
   audioComponent: document.createElement('audio'),
   originalAudioName: '',
-  originalDuration: 0
+  originalDuration: 0,
+  audioFile: null
 };
 export const namePodcastAccess = {
   'admins-only': 'Администраторам',

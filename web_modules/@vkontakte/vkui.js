@@ -1,7 +1,8 @@
-import { c as createCommonjsModule, r as react, g as getDefaultExportFromCjs } from '../common/index-2cd4dd6b.js';
-import { b as browserSprite, a as browserSymbol, e as es6ObjectAssign } from '../common/browser-sprite-329c1bbb.js';
+import { c as createCommonjsModule, g as getDefaultExportFromCjs } from '../common/_commonjsHelpers-6f5dde0d.js';
+import { r as react } from '../common/index-df564204.js';
+import { b as browserSprite, a as browserSymbol, e as es6ObjectAssign } from '../common/browser-sprite-44febf1c.js';
 import { b as bridge } from '../common/index.es-112d111e.js';
-import { p as propTypes } from '../common/index-06b61c98.js';
+import { p as propTypes } from '../common/index-250039db.js';
 
 var canUseDOM = !!(typeof window !== 'undefined' && window.document &&
 /* eslint-disable */
@@ -3339,6 +3340,19 @@ Card.defaultProps = {
   mode: 'tint'
 };
 
+var CardGrid = function CardGrid(_ref) {
+  var children = _ref.children,
+      className = _ref.className,
+      style = _ref.style,
+      restProps = objectWithoutProperties(_ref, ["children", "className", "style"]);
+
+  var platform = usePlatform();
+  return /*#__PURE__*/react.createElement("div", _extends_1({}, restProps, {
+    style: style,
+    className: classNames(className, getClassname('CardGrid', platform))
+  }), children);
+};
+
 var CellButton = function CellButton(_ref) {
   var className = _ref.className,
       align = _ref.align,
@@ -4803,4 +4817,4 @@ var PanelHeaderBack = function PanelHeaderBack(props) {
 
 var PanelHeaderBack$1 = /*#__PURE__*/react.memo(PanelHeaderBack);
 
-export { ActionSheet$1 as ActionSheet, ActionSheetItem, Button$1 as Button, Caption, Card, Cell$1 as Cell, CellButton$1 as CellButton, Checkbox$1 as Checkbox, Div, File, FixedLayout$1 as FixedLayout, FormLayout, Group$1 as Group, Header, Headline, Input$1 as Input, Link, List, Panel$1 as Panel, PanelHeader$1 as PanelHeader, PanelHeaderBack$1 as PanelHeaderBack, Placeholder, Progress, Root$1 as Root, Separator$1 as Separator, SimpleCell$1 as SimpleCell, Tappable$1 as Tappable, Text, Textarea$1 as Textarea, View$1 as View, classNames, getClassname as getClassName, usePlatform, withPlatform };
+export { ActionSheet$1 as ActionSheet, ActionSheetItem, Button$1 as Button, Caption, Card, CardGrid, Cell$1 as Cell, CellButton$1 as CellButton, Checkbox$1 as Checkbox, Div, File, FixedLayout$1 as FixedLayout, FormLayout, Group$1 as Group, Header, Headline, Input$1 as Input, Link, List, Panel$1 as Panel, PanelHeader$1 as PanelHeader, PanelHeaderBack$1 as PanelHeaderBack, Placeholder, Progress, Root$1 as Root, Separator$1 as Separator, SimpleCell$1 as SimpleCell, Tappable$1 as Tappable, Text, Textarea$1 as Textarea, View$1 as View, classNames, getClassname as getClassName, usePlatform, withPlatform };

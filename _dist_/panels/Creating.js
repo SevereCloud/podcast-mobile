@@ -46,7 +46,11 @@ export class Creating extends React.Component {
           }
         };
 
-        reader.readAsDataURL(input.target.files[0]);
+        const audioFile = input.target.files[0];
+        reader.readAsDataURL(audioFile);
+        this.setPodcast({
+          audioFile
+        });
       }
     });
 
