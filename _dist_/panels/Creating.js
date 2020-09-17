@@ -127,7 +127,7 @@ export class Creating extends React.Component {
       top: "\u041E\u043F\u0438\u0441\u0430\u043D\u0438\u0435 \u043F\u043E\u0434\u043A\u0430\u0441\u0442\u0430",
       bottom: highlightErrors && !podcast.description ? 'Пожалуйста, введите описание' : '',
       status: highlightErrors && !podcast.description ? 'error' : 'default',
-      placeholder: "\u041D\u0430 \u0447\u0442\u043E \u043F\u043E\u0439\u0434\u0443\u0442 \u0434\u0435\u043D\u044C\u0433\u0438 \u0438 \u043A\u0430\u043A \u043E\u043D\u0438 \u043F\u043E\u043C\u043E\u0433\u0443\u0442?",
+      placeholder: "",
       value: podcast.description,
       onChange: e => this.setPodcast({
         description: e.target.value
