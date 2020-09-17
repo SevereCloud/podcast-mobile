@@ -19,3 +19,7 @@ yarn run linter
 # Полностью собирает бандл для приложения
 yarn run build
 ```
+
+---
+
+APK собрана с помощью [PWABuilder](https://www.pwabuilder.com)
