@@ -4,6 +4,7 @@ import { Icon24Play, Icon24Pause, Icon24Music, Icon24ArrowUturnLeftOutline } fro
 import { Icon24ChartDown, Icon24ChartUp, Icon24Cut } from '../icons/index.js';
 import WaveSurfer from '../../../web_modules/wavesurferjs.js';
 import TimelinePlugin from './plugins/timeline.js';
+import RegionsPlugin from './plugins/regions/index.js';
 
 const AudioEditor = ({
   podcast
@@ -13,7 +14,8 @@ const AudioEditor = ({
   } = podcast;
   const [isBlobLoading, setIsBlobLoading] = useState(true);
   const [shouldMusicPlay, setShouldMusicPlay] = useState(false);
-  const [didMount, setDidMount] = useState(false); // eslint-disable-next-line
+  const [didMount, setDidMount] = useState(false);
+  const [selecrionRegion, setSelectionRegion] = useState(null); // eslint-disable-next-line
 
   const [wavesurfer, setWavesurfer] = useState(null);
   useEffect(() => {
@@ -54,12 +56,32 @@ const AudioEditor = ({
           fontSize: 9,
           height: 26,
           notchPercentHeight: 33
-        })]
+        }), RegionsPlugin.create({})]
       });
       wavesurfer.loadBlob(audioFile);
       wavesurfer.on('ready', () => {
         setIsBlobLoading(false);
-        wavesurfer.getCurrentTime;
+      });
+      wavesurfer.on('interaction', () => {
+        // be sure that only one region is created
+        if (Object.keys(wavesurfer.regions.list).length === 0) {
+          const selectionReg = wavesurfer.addRegion({
+            start: 0,
+            end: wavesurfer.getDuration(),
+            color: 'rgba(0, 0, 0, 0,1)',
+            handleStyle: {
+              left: {
+                backgroundColor: 'rgb(63, 138, 224)',
+                width: '6px'
+              },
+              right: {
+                backgroundColor: 'rgb(63, 138, 224)',
+                width: '6px'
+              }
+            }
+          });
+          setSelectionRegion(selectionReg);
+        }
       });
       setDidMount(true);
       setWavesurfer(wavesurfer);
@@ -97,7 +119,7 @@ const AudioEditor = ({
   }), /*#__PURE__*/React.createElement("div", {
     id: "waveform",
     style: {
-      height: 90,
+      height: 96,
       background: '#f2f3f5'
     }
   }), /*#__PURE__*/React.createElement("div", {
@@ -126,7 +148,9 @@ const AudioEditor = ({
       width: 44,
       marginRight: 4
     },
-    before: /*#__PURE__*/React.createElement(Icon24Cut, null),
+    before: /*#__PURE__*/React.createElement(Icon24Cut, {
+      mode: "secondary"
+    }),
     size: "l",
     mode: "secondary"
   }), /*#__PURE__*/React.createElement(Button, {
@@ -149,14 +173,18 @@ const AudioEditor = ({
       width: 44,
       marginRight: 4
     },
-    before: /*#__PURE__*/React.createElement(Icon24ChartUp, null),
+    before: /*#__PURE__*/React.createElement(Icon24ChartUp, {
+      mode: "secondary"
+    }),
     size: "l",
     mode: "secondary"
   }), /*#__PURE__*/React.createElement(Button, {
     style: {
       width: 44
     },
-    before: /*#__PURE__*/React.createElement(Icon24ChartDown, null),
+    before: /*#__PURE__*/React.createElement(Icon24ChartDown, {
+      mode: "secondary"
+    }),
     size: "l",
     mode: "secondary"
   })))))));
