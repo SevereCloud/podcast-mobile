@@ -28,6 +28,8 @@ import {
 import type { Podcast } from '../../types';
 import WaveSurfer from 'wavesurfer.js';
 import TimelinePlugin from './plugins/timeline';
+import RegionsPlugin from './plugins/regions';
+
 interface IAudioEditorProps {
 	podcast: Podcast;
 }
@@ -37,6 +39,7 @@ const AudioEditor: FunctionComponent<IAudioEditorProps> = ({ podcast }) => {
 	const [isBlobLoading, setIsBlobLoading] = useState<boolean>(true);
 	const [shouldMusicPlay, setShouldMusicPlay] = useState<boolean>(false);
 	const [didMount, setDidMount] = useState<boolean>(false);
+	const [selecrionRegion, setSelectionRegion] = useState<any>(null);
 	// eslint-disable-next-line
 	const [wavesurfer, setWavesurfer] = useState<WaveSurfer | null>(null);
 	useEffect(() => {
@@ -78,13 +81,34 @@ const AudioEditor: FunctionComponent<IAudioEditorProps> = ({ podcast }) => {
 						height: 26,
 						notchPercentHeight: 33,
 					}),
+					RegionsPlugin.create({}),
 				]
 			});
 			wavesurfer.loadBlob(audioFile!);
 			wavesurfer.on('ready', () => {
 				setIsBlobLoading(false);
-				wavesurfer.getCurrentTime
 			});
+			wavesurfer.on('interaction', () => {
+				// be sure that only one region is created
+				if (Object.keys(wavesurfer.regions.list).length === 0) {
+					const selectionReg = wavesurfer.addRegion({
+						start: 0,
+						end: wavesurfer.getDuration(),
+						color: 'rgba(0, 0, 0, 0,1)',
+						handleStyle: {
+							left: {
+								backgroundColor: 'rgb(63, 138, 224)',
+								width: '6px',
+							},
+							right: {
+								backgroundColor: 'rgb(63, 138, 224)',
+								width: '6px',
+							},
+						},
+					});
+					setSelectionRegion(selectionReg);
+				}
+			})
 
 			setDidMount(true);
 			setWavesurfer(wavesurfer);
@@ -117,7 +141,7 @@ const AudioEditor: FunctionComponent<IAudioEditorProps> = ({ podcast }) => {
 
 					<Separator wide />
 
-					<div id="waveform" style={{ height: 90, background: '#f2f3f5' }} />
+					<div id="waveform" style={{ height: 96, background: '#f2f3f5' }} />
 
 					<div style={{ padding: 8 }}>
 						{isBlobLoading && (
@@ -138,7 +162,7 @@ const AudioEditor: FunctionComponent<IAudioEditorProps> = ({ podcast }) => {
 								<div>
 									<Button
 										style={{ width: 44, marginRight: 4 }}
-										before={<Icon24Cut />}
+										before={<Icon24Cut mode="secondary" />}
 										size="l"
 										mode="secondary"
 									/>
@@ -158,13 +182,13 @@ const AudioEditor: FunctionComponent<IAudioEditorProps> = ({ podcast }) => {
 									/>
 									<Button
 										style={{ width: 44, marginRight: 4 }}
-										before={<Icon24ChartUp />}
+										before={<Icon24ChartUp mode="secondary" />}
 										size="l"
 										mode="secondary"
 									/>
 									<Button
 										style={{ width: 44 }}
-										before={<Icon24ChartDown />}
+										before={<Icon24ChartDown mode="secondary" />}
 										size="l"
 										mode="secondary"
 									/>
