@@ -138,7 +138,7 @@ const AudioEditor: FunctionComponent<IAudioEditorProps> = ({ podcast }) => {
 								<div>
 									<Button
 										style={{ width: 44, marginRight: 4 }}
-										before={<Icon24Cut />}
+										before={<Icon24Cut mode="secondary"/>}
 										size="l"
 										mode="secondary"
 									/>
@@ -158,13 +158,13 @@ const AudioEditor: FunctionComponent<IAudioEditorProps> = ({ podcast }) => {
 									/>
 									<Button
 										style={{ width: 44, marginRight: 4 }}
-										before={<Icon24ChartUp />}
+										before={<Icon24ChartUp mode="secondary"/>}
 										size="l"
 										mode="secondary"
 									/>
 									<Button
 										style={{ width: 44 }}
-										before={<Icon24ChartDown />}
+										before={<Icon24ChartDown mode="secondary"/>}
 										size="l"
 										mode="secondary"
 									/>
