@@ -55,6 +55,7 @@ export class Creating extends React.Component<CreatingProps, CreatingState> {
     };
 
     this.openAccess = this.openAccess.bind(this);
+    this.change = this.change.bind(this)
   }
 
   get isValid() {
@@ -74,7 +75,7 @@ export class Creating extends React.Component<CreatingProps, CreatingState> {
 
   change = (input: ChangeEvent<HTMLInputElement>) => {
     if (input.target.files && input.target.files[0]) {
-      this.setPodcast({ originalAudioName: input.target.files[0].name });
+      const originalAudioName = input.target.files[0].name;
 
       let reader = new FileReader();
       reader.onload = (e) => {
@@ -83,11 +84,10 @@ export class Creating extends React.Component<CreatingProps, CreatingState> {
           audio.src = e.target.result;
           audio.onloadedmetadata = () => {
             this.setPodcast({ originalDuration: audio.duration });
-            console.log(audio.duration);
           };
           const context = new window.AudioContext();
           const source = context.createMediaElementSource(audio);
-          this.setPodcast({ audioComponent: audio, audioSource: source });
+          this.setPodcast({ audioComponent: audio, audioSource: source, originalAudioName: originalAudioName });
         }
       };
 
